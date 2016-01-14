@@ -1,4 +1,5 @@
 <?php
+namespace OT;
 // --------------------------------------------------------------------------------
 // PhpConcept Library - Zip Module 2.8.2
 // --------------------------------------------------------------------------------
@@ -221,6 +222,7 @@
       die('Abort '.basename(__FILE__).' : Missing zlib extensions');
     }
 
+   
     // ----- Set the attributes
     $this->zipname = $p_zipname;
     $this->zip_fd = 0;

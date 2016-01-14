@@ -7,26 +7,27 @@
       <div class="footer-link">
         <div class="container">
           <div class ="row demo-row" style="padding: 10px 20px;">
-            <section class="col-md-7">
+            <section class="col-md-9">
               <div class="link-item">
                 <h6>我是学生</h6>
-                <ul class="list-unstyled" >
-                  <li><a  target="_blank">如何注册</a></li>
-                  <li><a  target="_blank">如何学习</a></li>
+                <ul class="list-unstyled big-font-size" >
+                  <li><a href="{:U('Show/index?type=3&id='.C('LINK_REGISTRATION_TUTORIAL'))}"  target="_blank">如何注册</a></li>
+                  <li><a href="{:U('Show/index?type=3&id='.C('LINK_LEARNING_TUTORIAL'))}"  target="_blank">如何学习</a></li>
+                  <li><a href="{:U('Home/User/taskDetails')}" target="_blank">提交作业</a></li>
                 </ul>
               </div>
 
               <div class="link-item ">
                 <h6>我是老师</h6>
-                <ul class="list-unstyled" >
-                  <li><a href="{:U('Admin/Resource/index')}" target="_blank">发布课程</a></li>
-                  <li><a href="{:U('Admin/Tab/index')}" target="_blank">教学资料库</a></li>
+                <ul class="list-unstyled big-font-size" >
+                  <li><a href="{:U('Home/User/videoDetails')}" target="_blank">发布课程</a></li>
+                  <li><a href="{:U('Home/User/taskDetails')}" target="_blank">布置作业</a></li>
                 </ul>
               </div>
 
-              <div class="link-item ">
+              <div class="link-item hidden">
                 <h6>我是管理员</h6>
-                <ul class="list-unstyled" >
+                <ul class="list-unstyled big-font-size" >
                   <li><a href="{:U('Admin/Config/groups')}" target="_blank">系统设置</a></li>
                   <li><a href="{:U('Admin/Advertisement/index')}" target="_blank">资源管理</a></li>
                   <li><a href="{:U('Admin/User/index')}" target="_blank">用户管理</a></li>
@@ -35,18 +36,33 @@
 
               <div class="link-item ">
                 <h6>关于我们</h6>
-                <ul class="list-unstyled" >
-                  <li><a target="_blank">网站地图</a></li>
+                <ul class="list-unstyled big-font-size" >
+                  <li><a href="{:U('Show/index?type=3&id='.C('LINK_ABOUT_US'))}"  target="_blank">关于我们</a></li>
+                  <li><a href="{:U('Show/index?type=3&id='.C('LINK_CONTACT_US'))}" target="_blank">联系我们</a></li>
+                  <li><a href="{:U('Show/index?type=3&id='.C('LINK_TO_JOIN_OUR'))}" target="_blank">加入我们</a></li>
+                </ul>
+              </div>
+              <div class="link-item ">
+                <h6>帮助</h6>
+                <ul class="list-unstyled big-font-size" >
+                  <!--留言板功能有些缺陷，私信可代替留言板。关掉留言板功能-->
+                  <li class="hidden"><a  href="{:U('Message/index')}" target="_blank">留言板</a></li>
+                  <li><a href="{:C('CONTACT_WORD_PESS')}" target="_blank">答疑博客</a></li>
+                  <li><a href="{:U('Show/index?type=3&id='.C('LINK_COPYRIGHT_NOTICE'))}" target="_blank">版权声明</a></li>
                 </ul>
               </div>
             </section>
 
-            <section class="col-md-5 friendly-link">
+            <section class="col-md-3">
+
+            </section>
+
+            <section class="col-md-12 friendly-link">
               <article class="panel">
                 <div class="panel-heading">
                 <h6 class="panel-title"><span class="fui-link"></span>&nbsp;&nbsp;友情链接</h6>
                 </div>
-                <div class="panel-body ">
+                <div class="panel-body big-font-size">
                    {:W('Config/friendlink')}
                 </div>
               </article> 
@@ -59,7 +75,7 @@
 
       <!--版权Stater-->
       <div class="copyright">
-           <div class="container" style="padding: 8px 20px;">
+           <div class="container big-font-size" style="padding: 8px 20px;">
               {:W('Config/copyright')}
            </div>
       </div>

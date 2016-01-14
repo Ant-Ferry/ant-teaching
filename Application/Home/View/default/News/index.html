@@ -18,7 +18,8 @@
   </div>
   <!--内容部分-->
   <div class="row">
-    <article id="indexMain" class="col-sm-8">
+    <article  class="col-sm-8">
+      <section class="indexMain">
         <ul class="indexList" id="pic">
           <!-- Cx标签 statr-->
           <foreach name="news" item="vo" key="k" >
@@ -43,11 +44,12 @@
             
         </ul>
         <div class="tc"><a href="{:U('Newlist/index?type=1&group=-1')}" class="more">查看更多</a></div>
+      </section>
     </article>
     
     <article class="col-sm-4">
 
-      <div class="indexSub indexSub1">
+      <div class="indexSub indexSub1 background-type">
           <h6 class="indexTitle title1"><span class="fui-bubble">&nbsp;</span>通知
              <a href="{:U('Newlist/index?type=1&group=3')}" ><span class="badge pull-right">move</span></a>
           </h6>
@@ -60,7 +62,7 @@
           </ul>
       </div>
 
-      <div class="indexSub indexSub2">
+      <div class="indexSub indexSub2 background-type">
           <h6 class="indexTitle title1"><span class="fui-windows">&nbsp;</span>学院新闻
           <a href="{:U('Newlist/index?type=1&group=2')}"  ><span class="badge pull-right">move</span></a>
           </h6>
@@ -92,7 +94,7 @@
       </div>
         
       <!-------->
-      <div class="indexSub indexSub1">
+      <div class="indexSub indexSub1 background-type">
         <h6 class="indexTitle title1"><span class="fui-bubble">&nbsp;</span>热门资讯
            <a href="{:U('Newlist/index?type=1&group=1')}" ><span class="badge pull-right">move</span></a>
         </h6>

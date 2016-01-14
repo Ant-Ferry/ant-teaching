@@ -21,9 +21,9 @@ class FileController extends AdminController {
 		$file_driver = C('DOWNLOAD_UPLOAD_DRIVER');
 		$info = $File->upload(
 			$_FILES,
-			C('DOWNLOAD_UPLOAD'),
-			C('DOWNLOAD_UPLOAD_DRIVER'),
-			C("UPLOAD_{$file_driver}_CONFIG")
+			C('DOWNLOAD_UPLOAD'),/*文件上传配置*/
+			C('DOWNLOAD_UPLOAD_DRIVER'),/*上传驱动名称*/
+			C("UPLOAD_{$file_driver}_CONFIG")/*上传驱动配置*/
 		);
 
         /* 记录附件信息 */
@@ -85,4 +85,43 @@ class FileController extends AdminController {
         /* 返回JSON数据 */
         $this->ajaxReturn($return);
     }
+
+    /**
+     * 上传头像
+     * @author huajie <banhuajie@163.com>
+     */
+    public function uploadAvator(){
+        /*
+        //TODO: 用户登录检测
+        if ( !is_login() ) {
+            $this->error( '您还没有登陆',U('User/login') );
+            return;
+        }
+        */
+        /* 返回标准数据 */
+        $return  = array('status' => 1, 'info' => '上传成功', 'data' => '');
+
+        /* 调用文件上传组件上传文件 */
+        $Avator = D('Avator');
+        $pic_driver = C('AVATOR_UPLOAD_DRIVER');
+        $info = $Avator->upload(
+            $_FILES,
+            C('AVATOR_UPLOAD'),
+            C('AVATOR_UPLOAD_DRIVER'),
+            C("AVATOR_{$pic_driver}_CONFIG")
+        ); //TODO:上传到远程服务器
+
+        /* 记录图片信息 */
+        if($info){
+            $return['status'] = 1;
+            $return = array_merge($info['download'], $return);
+        } else {
+            $return['status'] = 0;
+            $return['info']   = $Avator->getError();
+        }
+
+        /* 返回JSON数据 */
+        $this->ajaxReturn($return);
+    }
+
 }

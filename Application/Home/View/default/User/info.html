@@ -2,78 +2,193 @@
 
 <block name="style">
   <link href="__CSS__/page/user-style.css" rel="stylesheet">
+  <link href="__CSS__/page/teacher-style.css" rel="stylesheet">
+  <link href="__CSS__/common.css" rel="stylesheet">
 </block>
 
 <block name="header">
 </block>
 
 <block name="container">
-   <!--横快一 Stater-->
-    <div class="row white-background">
-      <div class="col-md-12">
-        <div class="media">
-           <a class="pull-left" href="#">
-              <img class="media-object avatar" src="/wwwroot/Public/Test/images/page/public/avatar.png" alt="头像" >
-           </a>
-           <div class="media-body teacher-type">
-                <h4>王老师</h4>
-                <div id="teacherTitle">
-                  <b style="font-size:20px;color: #34495e;">任课老师</b>
-                </div>
-                
-                <div class="about">
-                  <b>作为优秀老师，把最新鲜的资讯与大家分享是我的职责</b>
-                </div>
-                <div class="links"></div>
-           </div>
-        </div>
+  
+  <present name="userinfo">
+    <assign name="personnel" value="$userinfo" />
+    <present name="teach">
+      <assign name="personnel.type" value="1" />
+    </present>
+    <!--载入个人简介 Stater-->
+    <include file="Public/personal-details" />
+    <!--载入个人简介 End-->
+  </present>
+  
+  
+  <!--模块二 Stater-->
+    <div class="row">
+      <div class="col-md-2 ">
+        <article  class="indexMain" >
+          <!--载入个人简介导航列表 Stater-->
+          <include file="Public/personal-list-nav" />
+          <!--载入个人简介导航列表 End-->
+        </article>
       </div>
-    </div>
-    <!--横快一 End-->
-
-    <!--模块二 Stater-->
-    <div class="row white-background">
-      <div class="col-md-12">
-        <ul id="myTab" class="nav nav-tabs">
-           <li class="active"><a href="#home" data-toggle="tab">个人状态</a></li>
-           <!--
-           <li><a href="#reset-password" data-toggle="tab">修改密码</a></li>
-           -->
-        </ul>
-        <div id="myTabContent" class="tab-content">
-          <div class="tab-pane fade in active" id="home">
-            <div class="row">
-              <div class="col-md-5 text-end"><b>用户名 :</b></div>
-              <div class="col-md-7 control-text">cheng1483 </div>  
-            </div>
-            
-            <div class="row">
-              <div class="col-md-5 text-end"><b>用户邮箱 :</b></div>
-              <div class="col-md-7 control-text">cheng1483@163.com </div>  
-            </div>
-
-            <div class="row">
-              <div class="col-md-5 text-end"><b>最后登录时间 :</b></div>
-              <div class="col-md-7 control-text">2014-05-06</div>  
-            </div>
-
-            <div class="row">
-              <div class="col-md-5 text-end"><b>最后登录ip :</b></div>
-              <div class="col-md-7 control-text">2014-05-06</div>  
-            </div>      
-           </div>
-           <div class="tab-pane fade" id="reset-password">
+      <div class="col-md-10">
+        <article  class="indexMain" >
+          <ul id="myTab" class="nav nav-tabs">
+             <li class="hidden"><a href="#home" data-toggle="tab">个人状态</a></li>
+             <li class="active"><a href="#information" data-toggle="tab">个人资料</a></li>
+             <li ><a href="#avator" data-toggle="tab">头像设置</a></li>
+          </ul>
+          <div id="myTabContent" class="tab-content">
+            <article class="tab-pane fade " id="home">
+              <div class="row">
+                <div class="col-md-5 text-end"><b>用户名 :</b></div>
+                <div class="col-md-7 control-text">cheng1483 </div>
+              </div>
               
-           </div>
+              <div class="row">
+                <div class="col-md-5 text-end"><b>用户邮箱 :</b></div>
+                <div class="col-md-7 control-text">cheng1483@163.com </div>  
+              </div>
+
+              <div class="row">
+                <div class="col-md-5 text-end"><b>最后登录时间 :</b></div>
+                <div class="col-md-7 control-text">2014-05-06</div>  
+              </div>
+
+              <div class="row">
+                <div class="col-md-5 text-end"><b>最后登录ip :</b></div>
+                <div class="col-md-7 control-text">2014-05-06</div>  
+              </div>      
+             </article>
+
+            <!--资料设置-->
+              <article class="tab-pane fade in active" id="information">
+                <form id="profile" action="{:U()}" method="POST" class="form-horizontal">
+                  <input type="hidden" name="uid" value="{$userinfo.uid}">
+                  <div class="wlfg-wrap">
+                      <label class="label-name" for="nick">昵称</label>
+                      <div class="rlf-group">
+                          <input type="text" name="nickname" id="nick" autocomplete="off" data-validate="nick" class="rlf-input  rlf-input-nick" value="{$userinfo.nickname}" placeholder="请输入昵称.">
+                          <p class="rlf-tip-wrap"></p>
+                      </div>
+                  </div>
+                  <div class="wlfg-wrap">
+                      <label class="label-name">性别</label>
+                      <div class="rlf-group rlf-radio-group">
+                          <label>
+                            <input type="radio" hidefocus="true" value="0" name="sex"  <eq name="userinfo.sex" value="0">checked</eq> > 保密</label>
+                          <label>
+                            <input type="radio" hidefocus="true" value="1" name="sex" <eq name="userinfo.sex" value="1">checked</eq> > 男</label>
+                          <label>
+                            <input type="radio" hidefocus="true" value="2" name="sex" <eq name="userinfo.sex" value="2">checked</eq> > 女</label>
+                      </div>
+                      <p class="rlf-tip-wrap"></p>
+                  </div>
+                  <div class="wlfg-wrap">
+                      <label class="label-name" for="aboutme">个性签名</label>
+                      <div class="rlf-group">
+                          <textarea name="aboutme" id="aboutme" cols="30" rows="5" class="textarea">{$userinfo.aboutme}</textarea>
+                          <p class="rlf-tip-wrap"></p>
+                      </div>
+                  </div>
+                  <div class="wlfg-wrap">
+                    <div class="rlf-group">
+                      <button type="submit" id="submit" class="rlf-btn-green btn-block profile-btn ajax-post" target-form="form-horizontal">保 存</button>
+                    </div>
+                  </div>
+              </form>
+             </article>
+
+            <!--上传头像-->
+              <article class="tab-pane fade " id="avator">
+                <div id="setting-avator" class="setting-wrap setting-avator clearfix">
+                  <div class="avator-img pull-left">
+                    <div><img id="avator_img_show" src="{$userinfo.avator|get_avator='path'}" width="220" height="220"></div>
+                    <div><input type="button" hidefocus="true" value="换一换" class="js-avator-try avator-try"></div>
+                  </div>
+                  <div class="avator-btn-group">
+                    <div id="avator-btns" class="avator-btn-inner">
+                    <div class="avator-btn-wrap" style="text-align: left;">
+                      <input type="file" id="upload_avator">
+                    </div>
+                  </div>
+
+                </div>
+
+              </article>
+          </div>
         </div>
-      </div>
+      </article>
     </div>
     <!--模块二 End-->
 </block>
 
 <block name="side"> </block>
 <block name="script">
+  <script type="text/javascript" src="__JS__/common.js"></script>
+  <script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
 	<script type="text/javascript">
-    	
+
+    $(document).ready(function(){
+    });
 	</script>
+  <script>
+    //上传头像
+    /* 初始化上传插件 */
+    $("#upload_avator").uploadify({
+          "height"          : 40,
+          "swf"             : "__STATIC__/uploadify/uploadify.swf",
+          "fileObjName"     : "download",
+          "buttonText"      : "上传头像",
+          "uploader"        : "{:U('File/uploadAvator',array('session_id'=>session_id()))}",
+          "width"           : 220,
+          'removeTimeout'   : 1,
+          'fileTypeExts'    : '*.jpg; *.png; *.gif;',
+          "onUploadSuccess" : uploadAvator,
+          'onFallback' : function() {
+              alert('未检测到兼容版本的Flash.');
+          }
+      });
+    function uploadAvator(file, data){
+        var data = $.parseJSON(data);
+        var src = '';
+          if(data.status){
+            src = data.url || '__ROOT__' + data.path;
+            avatorShow(src);
+            updateAvator(data.id);
+          } else {
+            updateAlert(data.info);
+            setTimeout(function(){
+                  $('#top-alert').find('button').click();
+                  $(that).removeClass('disabled').prop('disabled',false);
+              },1500);
+          }
+      }
+
+    function avatorShow(url){
+      $("#avator_img_show").attr("src", url);
+      $("#head_pessonal_avator").attr("src", url);
+    }
+
+    function updateAvator(uid){
+      $.post("{:U('Home/User/modifyAvator')}",
+      {avator:uid},
+      function(data,status){
+         if (data.status!=1) {
+          updateAlert('上传失败！请重新上传');
+         }
+       
+        
+      });
+    }
+
+    $('.js-avator-try').click(function(){
+      $.post("{:U('Home/User/randomAvator')}",
+      {},
+      function(data,status){
+        //alert("Data: " + data + "\nStatus: " + status);
+        avatorShow(data);
+      });
+    });
+  </script>
 </block>

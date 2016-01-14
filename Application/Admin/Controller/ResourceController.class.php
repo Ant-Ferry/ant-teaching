@@ -40,9 +40,11 @@ class ResourceController extends AdminController {
         //获得标签
         $this -> assign('tab', $map['tab'] );
         //获得所有教师
-        $taach = D('PersonnelData')->getPersonnels(1);
-        $this -> assign('taach', $taach);
+        $personnes = $this->getPersonnelName();
+        $this -> assign('personnes', $personnes);
 
+        //检查是否能连接到 在线存储
+        //
         $this->display();
     }
 
@@ -74,6 +76,14 @@ class ResourceController extends AdminController {
             //获得所有教师
             $taach = D('PersonnelData')->getPersonnels(1);
             $this -> assign('taach', $taach);
+
+            //获得所有成功人士
+            $king = D('PersonnelData')->getPersonnels(2);
+            $this -> assign('king', $king);
+
+            //获得所有专家
+            $expert = D('PersonnelData')->getPersonnels(3);
+            $this -> assign('expert', $expert);
             
             $this->display('edit');
         }
@@ -108,18 +118,39 @@ class ResourceController extends AdminController {
             /* 获取数据 */
             $info = $DataModel->field(true)->find($id);
 
+            $authoritytype = D('PersonnelData')->field(true)->find($info['authority']);
+            //$info['authoritytype'] = D('PersonnelData')->field(true)->find($id)['']
             if(false === $info){
                 $this->error('获取配置信息错误');
+            }else if(false === $authoritytype){
+                $this->error('获取配置信息错误');
             }
+            else{
+                $info['authoritytype'] = $authoritytype['type'];
+            }
+
+
             $this->assign('info', $info);
             $this->meta_title = '编辑配置';
 
             //获得标签
             $tabs = D('ResourceTab')->getTablists();
             $this -> assign('tabs', $tabs);
+            //获得标注标签
+            $calloutTabs = D('ResourceTab')->getTablists(1);
+            $this -> assign('calloutTabs', $calloutTabs);
+
             //获得所有教师
             $taach = D('PersonnelData')->getPersonnels(1);
             $this -> assign('taach', $taach);
+
+            //获得所有成功人士
+            $king = D('PersonnelData')->getPersonnels(2);
+            $this -> assign('king', $king);
+
+            //获得所有专家
+            $expert = D('PersonnelData')->getPersonnels(3);
+            $this -> assign('expert', $expert);
             
             $this->display();
         }
@@ -129,6 +160,7 @@ class ResourceController extends AdminController {
      * 批量保存配置
      * @author 麦当苗儿 <zuojiazi@vip.qq.com>
      */
+    /*
     public function save($config){
         if($config && is_array($config)){
             $Config = M('Config');
@@ -140,7 +172,7 @@ class ResourceController extends AdminController {
         S('DB_CONFIG_DATA',null);
         $this->success('保存成功！');
     }
-
+    */
     /**
      * 删除配置
      * @author 麦当苗儿 <zuojiazi@vip.qq.com>
@@ -177,6 +209,12 @@ class ResourceController extends AdminController {
         return $banner; 
     }
 
+    /**
+     * [getPageValue 获得页面值]
+     * @param  [type] $tab  [标签]
+     * @param  [type] $page [页码]
+     * @return [type]       [description]
+     */
     protected function getPageValue($tab,$page){
 
         $Resource = D('Resource');
@@ -186,5 +224,15 @@ class ResourceController extends AdminController {
         return $banner; 
     }
 
+    protected function getPersonnelName(){
+       $list = D('PersonnelData')->getPersonnels(-1);
+
+       $returnData = array();
+       foreach ($list as $key => $value) {
+            $returnData[$value['id']] = $value;
+       }
+
+       return $returnData;
+    }
 
 }

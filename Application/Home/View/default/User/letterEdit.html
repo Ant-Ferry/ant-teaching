@@ -1,0 +1,114 @@
+<extend name="Base/common" />
+
+<block name="style">
+  <link href="__CSS__/page/user-style.css" rel="stylesheet">
+  <link href="__CSS__/page/teacher-style.css" rel="stylesheet">
+</block>
+
+<block name="header">
+</block>
+
+<block name="container">
+
+  <present name="userinfo">
+    <assign name="personnel" value="$userinfo" />
+    <present name="teach">
+      <assign name="personnel.type" value="1" />
+    </present>
+    <!--载入个人简介 Stater-->
+    <include file="Public/personal-details" />
+    <!--载入个人简介 End-->
+  </present>
+  
+  <!--模块二 Stater-->
+    <div class="row">
+      <div class="col-md-2 ">
+        <article  class="indexMain" >
+          <!--载入个人简介导航列表 Stater-->
+          <include file="Public/personal-list-nav" />
+          <!--载入个人简介导航列表 End-->
+        </article>
+      </div>
+      <div class="col-md-10">
+        <article  class="indexMain" >
+          <ul id="myTab" class="nav nav-tabs">
+             <li><a href="{:U('Home/User/letterDetails')}" data-toggle="tab" data-url-range="external">收到的私信</a></li>
+             <li><a href="{:U('Home/User/letterSet')}" data-toggle="tab" data-url-range="external">发送的私信</a></li>
+             <li class="active"><a href="#letter-list" data-toggle="tab">编辑信息</a></li>
+          </ul>
+          <div id="myTabContent" class="tab-content">
+            <section class="tab-pane fade in active" id="letter-list">
+                
+                <article>
+                  <form id="profile" action="{:U()}" method="POST" class="form-horizontal">
+                    <notempty name="info">
+                      <input type="hidden" name="from" value="{$info.from}">
+                      <input type="hidden" name="to" value="{$info.to}">
+                      <input type="hidden" name="type" value="{$info.type}">
+                    </notempty>
+                    <div class="wlfg-wrap">
+                      <label class="label-name" for="task_title">收信人</label>
+                      <div class="rlf-group">
+                          <notempty name="receiTeach"> 
+                              <div class="rlf-input  rlf-input-exit">
+                                <span>{$receiveInfo.nickname}
+                                  <small style="color:blue"><{$receiTeach|get_ucenter_enu='tid'|get_teach='name'}></small>
+                                </span>
+                              </div>
+                            <else/>
+                              <div class="rlf-input  rlf-input-exit">
+                              <span>{$receiveInfo.nickname}</span>
+                              </div>
+                          </notempty>
+                          <p class="rlf-tip-wrap"></p>
+                      </div>
+                    </div>
+                    <div class="wlfg-wrap">
+                      <label class="label-name" for="task_title">主题</label>
+                      <div class="rlf-group">
+                          <input type="text" name="title" id="task_title" autocomplete="off" data-validate="nick" class="rlf-input  rlf-input-exit" value="{$info.title}">
+                          <p class="rlf-tip-wrap"></p>
+                      </div>
+                    </div>
+                    
+                    <div class="wlfg-wrap">
+                      <label class="label-name">内容</label>
+                      <div class="rlf-group controls">
+                        <label class="input-large" style="width:90%;">
+                        <textarea name="content">{$info.content}</textarea></label>
+                        <div class="container-span">{:hook('adminArticleEdit',array('name'=>'content'))}</div>
+                      </div>
+                    </div>
+                    
+                    <div class="wlfg-wrap">
+                      <div class="rlf-group">
+                        <button type="submit" id="submit" class="rlf-btn-green btn-block profile-btn ajax-post" target-form="form-horizontal">发送</button>
+                      </div>
+                    </div>
+
+                  </form>
+                </article>
+
+              </section>    
+          </div>
+      </article>
+      </div>
+    </div>
+    <!--模块二 End-->
+</block>
+
+<block name="side"> </block>
+<block name="script">
+	<script type="text/javascript">
+    $('#myTab a').click(function(e) {
+      var range = $(this).attr("data-url-range");
+      if(range == "external"){
+        location.href = $(this).attr("href");
+      }
+      else{
+        $(this).tab('show');
+      }
+    });
+    
+	</script>
+</block>

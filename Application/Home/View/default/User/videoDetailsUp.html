@@ -1,0 +1,170 @@
+<extend name="Base/common" />
+
+<block name="style">
+  <link href="__CSS__/page/user-style.css" rel="stylesheet">
+  <link href="__CSS__/page/teacher-style.css" rel="stylesheet">
+  <link href="__CSS__/module.css" rel="stylesheet">
+</block>
+
+<block name="header">
+</block>
+
+<block name="container">
+   
+  <present name="userinfo">
+    <assign name="personnel" value="$userinfo" />
+    <present name="teach">
+      <assign name="personnel.type" value="1" />
+    </present>
+    <!--载入个人简介 Stater-->
+    <include file="Public/personal-details" />
+    <!--载入个人简介 End-->
+  </present>
+  
+  <!--模块二 Stater-->
+    <div class="row">
+      <div class="col-md-2 ">
+        <article  class="indexMain" >
+          <!--载入个人简介导航列表 Stater-->
+          <include file="Public/personal-list-nav" />
+          <!--载入个人简介导航列表 End-->
+        </article>
+      </div>
+      <div class="col-md-10">
+        <article  class="indexMain" >
+          <ul id="myTab" class="nav nav-tabs">
+             <li ><a href="{:U('Home/User/videoDetails')}" data-toggle="tab" data-url-range="external">视频观看记录</a></li>
+             <li class="active"><a href="#update_video" data-toggle="tab" data-url-range="internal">视频上传</a></li>
+          </ul>
+
+          <div id="myTabContent" class="tab-content">
+            <section class="tab-pane fade in active" id="update_video">
+                <div class="cf">
+                  <a class="btn" href="{:U('Home/User/videoDetailsUpEdit')}">新 增</a>
+                </div>
+                <div class="data-table table-striped">
+                  <table>
+                    <thead>
+                        <tr>
+                          <!--
+                          <th class="row-selected">
+                          </th>
+                        -->
+                          <th>ID</th><th>名称</th>
+                          <th>标签</th><th>封面</th>
+                          <th>合集</th>
+                          <th>时间</th><th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      <notempty name="list">
+                      <volist name="list" id="order">
+                        <tr>
+                          <!--
+                          <td><input class="ids row-selected" type="checkbox" name="id[]" value="{$order.id}"></td>
+                        -->
+                          <td width="20">{$order.id}</td>
+                          <td width="140">{$order.title}</td>
+                        <!--
+                        <td>{$order.type}</td>
+                    -->
+                        <td width="180">
+                            <notempty name="tabs">
+                                <foreach name="tabs" item="vo" key="k">
+                                    <eq name="vo.id" value="$order.tab">{$vo.name}</eq>
+                                </foreach>
+                            </notempty> 
+                        </td>
+                        <td width="90" ><img src="{$order.img|get_cover='path'}"  width="90" height="50" /> 
+                        </td>
+                      
+                        <td>{$order.set}</td>
+            
+                        <td width="160">{$order.create_time|date='Y-m-d H:i',###}</td>
+                        <td>
+                            <a title="编辑" href="{:U('videoDetailsUpEdit?id='.$order['id'])}">编辑</a>
+                            <a class="confirm ajax-get" title="删除" href="{:U('videoDetailsUpDel?id='.$order['id'])}">删除</a>
+                        </td>
+                        </tr>
+                      </volist>
+                      <else/>
+                      <td colspan="6" class="text-center"> aOh! 暂时还没有内容! </td>
+                      </notempty>
+                    </tbody>
+                  </table>
+        
+                  <!-- 分页 -->
+                  <div class="page">{$_page}</div>
+                </div>
+            </section>
+            <section class="tab-pane fade " id="video_add">
+                
+                <ol class="breadcrumb">
+                  <li><a href="javascript:video_return('video_add')">返回</a></li>
+                  <li><a >视频上传</a></li>
+                  <li class="active">添加</li>
+                </ol>
+                <div>
+                  <iframe src="" id="video_iframe_add" width=100% height=400 style="border: 0px inset;"></iframe>
+                </div>
+                
+            </section>
+            <section class="tab-pane fade " id="video_edit">
+              edit
+            </section>
+          </div>
+        </div>
+      </article>
+    </div>
+    <!--模块二 End-->
+</block>
+
+<block name="side"> </block>
+<block name="script">
+	<script type="text/javascript">
+      $('#myTab a').click(function(e) {
+      var range = $(this).attr("data-url-range");
+      if(range == "external"){
+        location.href = $(this).attr("href");
+      }
+      else{
+        $(this).tab('show');
+      }
+    });
+
+    /*添加视频*/
+    function video_add(){
+      $("#update_video").removeClass("in");
+      $("#update_video").removeClass("active");
+
+      //
+      $("#video_add").addClass("in");
+      $("#video_add").addClass("active");
+     
+      $("#video_iframe_add",parent.document.body).attr("src","{:U('Home/User/videoDetailsUpEdit')} ");
+      //$("#video_iframe_add",parent.document.body).reload();   
+    }
+
+     /*编辑视频*/
+    function video_edit(url){
+      $("#update_video").removeClass("in");
+      $("#update_video").removeClass("active");
+
+      //
+      $("#video_add").addClass("in");
+      $("#video_add").addClass("active");
+      $("#video_iframe_add",parent.document.body).attr("height",740);
+      $("#video_iframe_add",parent.document.body).attr("src",url);
+
+    }
+
+    function video_return(thisvideo){
+      $("#"+thisvideo).removeClass("in");
+      $("#"+thisvideo).removeClass("active");
+
+      //
+      $("#update_video").addClass("in");
+      $("#update_video").addClass("active");
+    }        	
+	</script>
+</block>

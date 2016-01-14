@@ -33,7 +33,7 @@ class ActivityController extends HomeController {
 		//var_dump($pageNumber);
 		$this->assign('page',$page);
 		//var_dump($page);
-	
+		Cookie('__forward__',$_SERVER['REQUEST_URI']);
     	$this->display();
     }
 

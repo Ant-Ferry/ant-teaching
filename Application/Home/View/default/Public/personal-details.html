@@ -1,0 +1,41 @@
+<!--个人详请模块-->
+<div class="row white-background">
+  <div class="col-md-12">
+    <div class="media ">
+       <a class="pull-left" href="#">
+          <img id="head_pessonal_avator" class="media-object avatar" src="{$personnel.avator|get_avator='path'}" 
+          alt="头像">
+       </a>
+       <div class="media-body teacher-type">
+            <h6 style="color: #34495e;">{$personnel.nickname}
+
+              <small >&nbsp;&nbsp;&nbsp;<b>性别:</b>
+                <switch name="personnel.sex">
+                        <case value="1">先生</case>
+                        <case value="2">女士</case>
+                        <case value="0">保密</case>
+                      </switch>
+              </small>
+              <small >&nbsp;&nbsp;&nbsp;<b>职业:</b>               
+              <switch name="personnel.type">
+                <case value="1">任课老师</case>
+                <case value="2">成功人士</case>
+                <case value="3">领域专家</case>
+                <default />学生
+              </switch>
+              </small>
+              </h6>
+            <div >
+              
+            </div>
+            
+            <div class="about">
+              <p style="font-size:16px;">
+                {$personnel.aboutme}
+              </p>
+            </div>
+            <div class="links"></div>
+       </div>
+    </div>
+  </div>
+  </div>

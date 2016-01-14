@@ -43,6 +43,8 @@
                <a href="#tabVideo1" data-toggle="tab">成功人士</a></li>
             <li>
                <a href="#tabVideo2" data-toggle="tab">领域专家</a></li>
+            <li>
+               <a href="#tabVideo3" data-toggle="tab">优秀教师</a></li>
           </ul>
           
           <article id="myTabContent" class="tab-content">
@@ -51,7 +53,7 @@
               <section class="row demo-row" style="padding: 10px">
                 <!-- Cx标签 statr--> 
                   <foreach name="classicalVideo" item="vo" >
-                    <article class="col-md-4">
+                    <article class="col-md-4 home-course-list">
                       <div class="activity-item">
                         <div class="activity-img">
                           <a href="{:U('Video/index?id='.$vo['id'])}" >
@@ -73,19 +75,31 @@
               <section class="row demo-row" style="padding: 10px">
                 <!-- Cx标签 statr-->
                 <foreach name="successPeople" item="vo" >
-                  <article class="col-md-3 margin-bottom-10px">
-                    <div class="teacher-item">
-                      <div class="teacher-top">
-                      <a class="teacher-img" href="{:U('Teacher/index?id='.$vo['id'])}" >
-                        <img class="img-circle" src="{$vo.portrait|get_cover='path'}" width="100%" height='120' alt="">
-                      </a>
-                      <a class="link-light" href="{:U('Teacher/index?id='.$vo['id'])}">{$vo.name}</a>
+                  <article class="col-md-6 margin-bottom-10px">
+                    <div class="teacher-item clearfix">
+                      <div class="teacher-avatar">
+                        <a class="teacher-img" href="{:U('Teacher/index?id='.$vo['id'])}" >
+                        <img class="img-circle" src="{$vo.portrait|get_avator='path'}" width="100%" height='120' alt="">
+                        </a>
                       </div>
-                      <div class="teacher-bottom">{$vo.synopsis}</div>
+                      
+                      <div class="teacher-info clearfix">
+                        <a class="btn btn-mooc-primary pull-right hidden" href="javascript:;" data-toggle="modal" data-target="#modal" data-url="/message/create/16">私信</a>
+                        <div class="teacher-name">
+                          <a href="{:U('Teacher/index?id='.$vo['id'])}">{$vo.name}</a>
+                        </div>
+                        <div class="teacher-position">
+                                            成功人士
+                                        </div>
+                        <div class="teacher-about">
+                          {$vo.synopsis}
+                        </div>
+                      </div>
                     </div>
                   </article>
                 </foreach>
                 <!-- Cx标签 End-->
+
               </section>
             </div>    
 
@@ -94,21 +108,65 @@
               <section class="row demo-row" style="padding: 10px">
                 <!-- Cx标签 statr-->
                 <foreach name="fieldExpert" item="vo" >
-                   <article class="col-md-3 margin-bottom-10px">
-                    <div class="teacher-item">
-                      <div class="teacher-top">
-                      <a class="teacher-img"  href="{:U('Teacher/index?id='.$vo['id'])}">
-                        <img class="img-circle" src="{$vo.portrait|get_cover='path'}" width="100%" height='120' alt="">
-                      </a>
-                      <a class="link-light" href="{:U('Teacher/index?id='.$vo['id'])}" >{$vo.name}</a>
+                   <article class="col-md-6 margin-bottom-10px">
+                    <div class="teacher-item clearfix">
+                      <div class="teacher-avatar">
+                        <a class="teacher-img" href="{:U('Teacher/index?id='.$vo['id'])}" >
+                        <img class="img-circle" src="{$vo.portrait|get_avator='path'}" width="100%" height='120' alt="">
+                        </a>
                       </div>
-                      <div class="teacher-bottom">{$vo.synopsis}</div>
+                      
+                      <div class="teacher-info clearfix">
+                        <a class="btn btn-mooc-primary pull-right hidden" href="javascript:;" data-toggle="modal" data-target="#modal" data-url="/message/create/16">私信</a>
+                        <div class="teacher-name">
+                          <a href="{:U('Teacher/index?id='.$vo['id'])}">{$vo.name}</a>
+                        </div>
+                        <div class="teacher-position">
+                                            领域专家
+                                        </div>
+                        <div class="teacher-about">
+                          {$vo.synopsis}
+                        </div>
+                      </div>
                     </div>
                   </article>
                   </foreach>
                 <!-- Cx标签 End-->
               </section>
-            </div>    
+            </div>
+
+
+            <!--标签页3-->
+            <div class= "tab-pane fade" id="tabVideo3">
+              <section class="row demo-row" style="padding: 10px">
+                <!-- Cx标签 statr-->
+                <foreach name="goodTeach" item="vo" >
+                   <article class="col-md-6 margin-bottom-10px">
+                    <div class="teacher-item clearfix">
+                      <div class="teacher-avatar">
+                        <a class="teacher-img" href="{:U('Teacher/index?id='.$vo['id'])}" >
+                        <img class="img-circle" src="{$vo.portrait|get_avator='path'}" width="100%" height='120' alt="">
+                        </a>
+                      </div>
+                      
+                      <div class="teacher-info clearfix">
+                        <a class="btn btn-mooc-primary pull-right hidden" href="javascript:;" data-toggle="modal" data-target="#modal" data-url="/message/create/16">私信</a>
+                        <div class="teacher-name">
+                          <a href="{:U('Teacher/index?id='.$vo['id'])}">{$vo.name}</a>
+                        </div>
+                        <div class="teacher-position">
+                                            优秀教师
+                                        </div>
+                        <div class="teacher-about">
+                          {$vo.synopsis}
+                        </div>
+                      </div>
+                    </div>
+                  </article>
+                  </foreach>
+                <!-- Cx标签 End-->
+              </section>
+            </div>     
           </article>
           </div>
         </div>
@@ -117,7 +175,7 @@
           <article class="panel panel-default">
             <div class="panel-heading">
               <a href="{:U('Newlist/index?type=1&group=1')}" ><span class="badge pull-right">move</span></a>
-                <h3 class="panel-title">&nbsp;&nbsp;热门资讯</h3>
+                <p class="panel-title">&nbsp;&nbsp;热门资讯</p>
                  
             </div>
     
@@ -146,6 +204,28 @@
     });
      $(".activity-item").mouseout(function(){
         $(this).removeClass("activity-shadow");
+    });
+
+    $(function(){
+      var thisId = window.location.hash;
+      if(thisId != "" && thisId != undefined){
+          switch (thisId)
+          {
+            case "#tabVideo0":
+              $('#myTab a[href="#tabVideo0"]').tab('show');
+              break;  
+            case "#tabVideo1":
+              $('#myTab a[href="#tabVideo1"]').tab('show');
+              break;
+            case "#tabVideo2":
+              $('#myTab a[href="#tabVideo2"]').tab('show');
+               break;
+            case "#tabVideo3":
+              $('#myTab a[href="#tabVideo3"]').tab('show');
+              break;
+          }
+
+      }
     });
     </script>
 </block>

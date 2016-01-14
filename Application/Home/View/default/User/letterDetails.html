@@ -1,0 +1,99 @@
+<extend name="Base/common" />
+
+<block name="style">
+  <link href="__CSS__/page/user-style.css" rel="stylesheet">
+  <link href="__CSS__/page/teacher-style.css" rel="stylesheet">
+  <link href="__CSS__/module.css" rel="stylesheet">
+</block>
+
+<block name="header">
+</block>
+
+<block name="container">
+
+  <present name="userinfo">
+    <assign name="personnel" value="$userinfo" />
+    <present name="teach">
+      <assign name="personnel.type" value="1" />
+    </present>
+    <!--载入个人简介 Stater-->
+    <include file="Public/personal-details" />
+    <!--载入个人简介 End-->
+  </present>
+  
+  <!--模块二 Stater-->
+    <div class="row">
+      <div class="col-md-2 ">
+        <article  class="indexMain" >
+          <!--载入个人简介导航列表 Stater-->
+          <include file="Public/personal-list-nav" />
+          <!--载入个人简介导航列表 End-->
+        </article>
+      </div>
+      <div class="col-md-10">
+        <article  class="indexMain" >
+          <ul id="myTab" class="nav nav-tabs">
+             <li class="active"><a href="#letter-list" data-toggle="tab">收到的私信</a></li>
+             <li><a href="{:U('Home/User/letterSet')}" data-toggle="tab"  data-url-range="external">发送的私信</a></li>
+          </ul>
+          <div id="myTabContent" class="tab-content" style="">
+            <section class="tab-pane fade in active" id="letter-list" >
+              
+              <div class="data-table table-striped">
+                <table class="table" >
+                  <thead>
+                      <tr>
+                        <th ></th>
+                        <th >发件人</th>
+                        <th >主题</th>
+                        <th >时间</th>
+                        <th >操作</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                  <notempty name="list">
+                    <foreach name="list" item="vo">
+                      <tr>
+                        <td width="6%"><i class=<eq name="vo.read" value="1">"mail-input"<else/>"mail-input mail-input-open"</eq> /></td>
+                        <td width="15%">{$vo.from|get_member='nickname'}
+                            <small style="color:blue"> <{$vo.from|get_teach_name}> </small>
+                          </td>
+                        <td width="30%">{$vo.title}</td>
+                        <td width="15%">{$vo.create_time|date='Y-m-d H:i',###}</td>
+                        <td width="9%"><a href="{:U('Home/User/letterShow',array('id'=>$vo['id']))}">查看</a></td>
+                      </tr>
+                    </foreach>
+                    
+                   <else/>
+                      <td colspan="6" class="text-center"> aOh! 暂时还没有内容! </td>
+                  </notempty>
+                  <tbody>
+                </table>
+                <!-- 分页 -->
+                  <div class="page">{$_page}</div>
+              </div> 
+
+              
+            </section>
+          </div>
+        </article>
+      </div>
+    </div>
+    <!--模块二 End-->
+</block>
+
+<block name="side"> </block>
+<block name="script">
+	<script type="text/javascript">
+    $('#myTab a').click(function(e) {
+      var range = $(this).attr("data-url-range");
+      if(range == "external"){
+        location.href = $(this).attr("href");
+      }
+      else{
+        $(this).tab('show');
+      }
+    });
+
+	</script>
+</block>

@@ -71,7 +71,11 @@ class HomeController extends Controller {
 	   }
 	   return null;
 	}
-
+    /**
+     * [setBanner 写入广告]
+     * @param [type] $url  [地址]
+     * @param [type] $data [数据]
+     */
 	public function setBanner($url, $data){
 	    $id = $this->getChannelVirtue(array('url' => $url),'id');
 	    if($id){
@@ -106,7 +110,7 @@ class HomeController extends Controller {
      * @return array|false
      * 返回数据集
      */
-    protected function lists ($model,$where=array(),$order='',$field=true){
+    protected function lists ($model,$where=array(),$order='',$field=true, $line=10){
         $options    =   array();
         $REQUEST    =   (array)I('request.');
         if(is_string($model)){
@@ -140,8 +144,10 @@ class HomeController extends Controller {
         if( isset($REQUEST['r']) ){
             $listRows = (int)$REQUEST['r'];
         }else{
-            $listRows = C('LIST_ROWS') > 0 ? C('LIST_ROWS') : 10;
+            $listRows = C('LIST_ROWS_HOME') > 0 ? C('LIST_ROWS_HOME') : $line;
         }
+
+       
         $page = new \Think\Page($total, $listRows, $REQUEST);
         if($total>$listRows){
             $page->setConfig('theme','%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END% %HEADER%');

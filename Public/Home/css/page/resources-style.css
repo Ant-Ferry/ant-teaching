@@ -101,15 +101,14 @@
       margin-top: 14px;
       margin-bottom: 0;
       font-weight: 400;
-      font-size: 19px;
+      font-size: 18px;
       color: #2980B9;
     }
    
     .activity-item .activity-info .activity-title span{
       padding-top: 4px;
-      
       font-weight: 400;
-      font-size: 14px;
+      font-size: 12px;
     }
     .activity-item .activity-info .activity-title span>a{
       color: #27AE60;

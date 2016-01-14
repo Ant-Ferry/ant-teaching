@@ -4,7 +4,7 @@
 	<link href="__CSS__/page/new-style.css" rel="stylesheet">
 </block>
 
-<block name="container">
+<block name="container" >
   <!--头部标题部分-->
   <section id="column">
     <ol class="breadcrumb">
@@ -15,9 +15,11 @@
   </section>
   <!--内容部分-->
   <div class="row">
-    <article id="indexMain" class="col-sm-9">
+    <!--排版 Stater--> 
+    <div class="col-sm-9">
+    <article  class="MarginLeft-10 indexMain" >
       <div class="contentTitle">          
-        <h6 >{$mediaValue.title}</h6>
+        <b >{$mediaValue.title}</b>
       </div> 
       
       <dt class="contentTime">{$mediaValue.time|default=time()|date='Y年m月d日',###} &nbsp;&nbsp;  点击:[ {$mediaContent['bookmark']+1} ]</dt>
@@ -29,9 +31,13 @@
         <!-- Cx标签 end  -->
       </section>
       <!-- 内容 end-->
-  </article>
-    
-    <article class="col-sm-3">
+    </article>
+    </div>
+    <!--排版 End-->
+
+    <!--排版 Stater-->
+    <div class="col-sm-3">
+    <article  class="MarginRight-10 indexMain" >
 
       <div class="indexSub indexSub1">
           <h6 class="indexTitle title1"><span class="fui-bubble">&nbsp;</span>通知
@@ -40,7 +46,7 @@
           <ul class="indexMedia">
             <!-- Cx标签 statr-->
             <foreach name="notice" item="vo" key="k" >
-                <li><a href="{:U('New/index?type=1&id='.$vo['id'])}" target="_blank">{$vo.title}</a></li>
+                <li ><a href="{:U('New/index?type=1&id='.$vo['id'])}" target="_blank">{$vo.title}</a></li>
             </foreach>
             <!-- Cx标签 end-->
           </ul>
@@ -76,7 +82,9 @@
           </div> 
         <!--Carousel End-->
       </div>
-    </article>      
+    </article>
+    </div>
+    <!--排版 End-->
   </div>
 
 </block>

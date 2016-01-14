@@ -30,11 +30,19 @@
 					<div class="form-item">
 						<label class="item-label">
 							类型<span class="check-tips">
-							（类型：1-特色社团 2-Ebook读书节 3-美丽校园摄影大赛 4-学生作品)
+							（类型：1-特色社团  2-Ebook读书节  3-美丽校园摄影大赛  4-学生作品)
 							</span>
 						</label>
 						<div class="controls">
+							<!--
 							<input type="text" name="group" class="text input-large" value="{$info.group|default='1'}">
+							-->
+							<select name="group" id="group"  class="input-large">
+			                    <option value="1" <eq name="info.group" value="1">selected</eq>>特色社团</option>
+			                    <option value="2" <eq name="info.group" value="2">selected</eq>>Ebook读书节</option>
+			                    <option value="3" <eq name="info.group" value="3">selected</eq>>美丽校园摄影大赛</option>
+			                    <option value="4" <eq name="info.group" value="4">selected</eq>>学生作品</option>
+			                </select>
 						</div>
 					</div>
 
@@ -58,6 +66,16 @@
 							<textarea name="synopsis">{$info.synopsis|default=''}</textarea></label>
 						</div>
 					</div>
+					<!--添加内容-->
+					<div class="form-item">
+						<label class="item-label">内容<span class="check-tips"></span></label>
+						<div class="controls">
+							<label class="input-large">
+							<textarea name="article">{$article.content}</textarea></label>
+							<div class="container-span">{:hook('adminArticleEdit',array('name'=>'article'))}</div>
+						</div>
+					</div>
+
 					<script type="text/javascript">
 					//上传图片
 				    /* 初始化上传插件 */
@@ -93,7 +111,7 @@
 				        }
 				    }
 
-				   	//上传图片
+				   	//上传视频
 				    /* 初始化上传插件 */
 					$("#upload_file").uploadify({
 				        "height"          : 30,
@@ -134,7 +152,7 @@
 					</script>
 				</div>
 
-				<!-- 高级 -->
+				<!-- 高级 
 				<div id="tab2" class="tab-pane tab2">
 					<div class="form-item">
 						<label class="item-label">可见性<span class="check-tips">（是否对用户可见，针对前台）</span></label>
@@ -149,8 +167,8 @@
 					
 
 				</div>
-
-				<!-- 高级 -->
+				-->
+				<!-- 高级 
 				<div id="tab2" class="tab-pane tab2">
 					<div class="form-item">
 						<label class="item-label">标题</label>
@@ -167,14 +185,16 @@
 					</div>
 	
 				</div>
-
+				-->
 				<div class="form-item">
 					<input type="hidden" name="id" value="{$info.id|default=''}">
 					<input type="hidden" name="pid" value="{:isset($category['id'])?$category['id']:$info['pid']}">
 					<button type="submit" id="submit" class="btn submit-btn ajax-post" target-form="form-horizontal">确 定</button>
 					<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
 				</div>
+				
 </form>
+
 		</div>
 	</div>
 </block>

@@ -33,26 +33,13 @@ class EducationController extends HomeController {
         foreach ($list as $k => $value) {
             if($value['id'] == $key){
                 $content['title'] = $value['title'];
+                $content['create_time'] = $value['create_time'];
                 break; 
             }
         }
-
+        Cookie('__forward__',$_SERVER['REQUEST_URI']);
         $this->assign('content',$content);
-        //var_dump($content);
-        /*
-        //教学内容列表
-        $EduContent = $this->getEduContent();
-        $this->assign('eduContent',$EduContent );
-        var_dump($EduContent);
-
-        //情景教学列表
-        $EduScenario = $this->getEduScenario();
-        $this->assign('eduScenario',$EduScenario );
-
-        //
-        $EduEvaluation = $this->getEduEvaluation();
-        $this->assign('eduEvaluation',$EduEvaluation);
-        */
+        
     	$this->display();
     }
 

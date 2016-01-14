@@ -29,6 +29,7 @@ class MediaArticleModel extends Model {
     );
 
     protected $_auto = array(
+        array('create_time',NOW_TIME,1)
     );
     
     /**

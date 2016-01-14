@@ -26,8 +26,9 @@ class ResourcesController extends HomeController {
         //转换数据
         $this->adjust($courseList);
         //var_dump($courseList);
+        
         $this->assign('courseList',$courseList);
-
+        Cookie('__forward__',$_SERVER['REQUEST_URI']);
         $this->display();
     }
 

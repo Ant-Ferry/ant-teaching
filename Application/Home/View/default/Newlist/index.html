@@ -1,6 +1,7 @@
 <extend name="Base/common"/>
 
 <block name="style">
+  <link href="__CSS__/page/new-style.css" rel="stylesheet">
 	<link href="__CSS__/page/newlist-style.css" rel="stylesheet">
 </block>
 
@@ -16,8 +17,9 @@
   <!--column End-->
 
   <div class="row"> 
-
-    <article id="indexMain" class="col-sm-8">
+    
+    <article class="col-sm-8">
+      <section class="background-type indexMain">
         <ul class="indexList" id="pic">
           <!-- Cx标签 statr-->
           <foreach name="listData" item="vo" key="k" >
@@ -50,21 +52,24 @@
           </ul>
           
         </div>
+      </section>
     </article>
     
     <article class="col-sm-4">
-      <div class="indexSub indexSub1">
-          <h6 class="indexTitle title1"><span class="fui-bubble">&nbsp;</span>列表
-          </h6>
-          <ul class="indexMedia">
-            <!-- Cx标签 statr-->
-            <foreach name="listHost" item="vo" key="k" >
+      <section class="background-typev indexMain">
+        <div class="indexSub indexSub1">
+            <h6 class="indexTitle title1"><span class="fui-bubble">&nbsp;</span>列表
+            </h6>
+            <ul class="indexMedia">
+              <!-- Cx标签 statr-->
+              <foreach name="listHost" item="vo" key="k" >
 
-                <li class=<if condition="$vo.key eq $group">"active"<else /></if>><a href="{:U('Newlist/index?type=1&group='.$vo['key'])}" >{$vo.value}</a></li>
-            </foreach>
-            <!-- Cx标签 end-->
-          </ul>
-      </div>
+                  <li class=<if condition="$vo.key eq $group">"active"<else /></if>><a href="{:U('Newlist/index?type=1&group='.$vo['key'])}" >{$vo.value}</a></li>
+              </foreach>
+              <!-- Cx标签 end-->
+            </ul>
+        </div>
+      </section>
     </article>   
       
   </div>

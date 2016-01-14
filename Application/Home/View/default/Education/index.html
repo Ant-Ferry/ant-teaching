@@ -26,36 +26,38 @@
          <div class="col-md-12" >
            <ul id="edulist" class="nav nav-pills">
              <li class=<eq name="page" value="1">"active"</eq>>
-              <a  href=<eq name="page" value="1">"#tabVideo"<else/>{:U('Education/index',array('page'=>1))}</eq>><b>教学内容</b></a></li>
+              <a  href=<eq name="page" value="1">"#tabVideo"<else/>{:U('Education/index',array('page'=>1))}</eq>>教学内容</a></li>
              <li class=<eq name="page" value="2">"active"</eq>>
-              <a href=<eq name="page" value="2">"#tabVideo"<else/>"{:U('Education/index',array('page'=>2))}"</eq>><b>情景教学</b></a></li>
+              <a href=<eq name="page" value="2">"#tabVideo"<else/>"{:U('Education/index',array('page'=>2))}"</eq>>情景教学</a></li>
              <li class=<eq name="page" value="3">"active"</eq>>
-              <a  href=<eq name="page" value="3">"#tabVideo"<else/>"{:U('Education/index',array('page'=>3))}"</eq>><b>教学效果与评价<b></a></li>
-
-
+              <a  href=<eq name="page" value="3">"#tabVideo"<else/>"{:U('Education/index',array('page'=>3))}"</eq>>教学效果与评价</a></li>
           </ul>
           <article  class="tab-content" >
              <div class="tab-pane fade in active" id="tabVideo">
                 <div class="row demo-row" style="padding: 10px 0px;">
                   <div class="col-md-8">
-                    <article id="" class="panel panel-default">
+                    <article  class="panel panel-default">
                       <div class="panel-heading">
                       <h3 class="panel-title">&nbsp;&nbsp;
                         <switch name="page">
                           <case value="1">教学内容</case>
-                          <case value="2">教学效果与评价</case>
-                          <case value="3">情景教学</case>
+                          <case value="2">情景教学</case>
+                          <case value="3">教学效果与评价</case>
                         </switch>
                       </h3>
                       </div>
 
                       <div class="panel-body blog-post">
-                        <h6 class="blog-post-title">{$content.title}</h6>
+                        <p class="blog-post-title">{$content.title}</p>
                         <p class="blog-post-meta ">发表时间：{$content.create_time|default=time()|date='Y-m-d',###}</p>
                         
-                        <!-- 内容Stater -->
+                        <!-- 内容 statr-->
+                        <section class="fck">
+                          <!-- Cx标签 statr-->
                           {$content.content}
-                        <!--内容结束-->
+                          <!-- Cx标签 end  -->
+                        </section>
+                        <!-- 内容 end-->
                       </div><!-- /.blog-post -->
                       </article>
                     
@@ -67,15 +69,15 @@
                       <h3 class="panel-title">&nbsp;&nbsp;
                         <switch name="page">
                           <case value="1">教学内容</case>
-                          <case value="2">教学效果与评价</case>
-                          <case value="3">情景教学</case>
+                          <case value="2">情景教学</case>
+                          <case value="3">教学效果与评价</case>
                         </switch>列表
                       </h3>
                       </div>
                       <div class="panel-body rightsidebar" style="padding:0px;">
                         <foreach name="list" item="vo" key="k">
                           <a href="{:U('Education/index',array('page'=>$page,'key'=>$vo['id']))}"  
-                            class=<eq name="vo.id" value="$keys">"list-group-item active" <else/> "list-group-item"</eq>> {$vo.title}</a>
+                            class=<eq name="vo.id" value="$keys">"list-group-item active" <else/> "list-group-item"</eq>>&nbsp;&nbsp;{$vo.title}</a>
                         </foreach>
                       </div>
                       </article>

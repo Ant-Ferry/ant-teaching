@@ -27,6 +27,7 @@ class MediaDataModel extends Model {
     );
 
     protected $_auto = array(
+        array('create_time',NOW_TIME,1)
     );
 
     /**
@@ -72,7 +73,7 @@ class MediaDataModel extends Model {
         $data['status'] = $status;
         $data['id'] = $id;
         $returnData = $this->create($data,2);
-        $field = array('id' ,'title','synopsis' ,'img','create_time');
+        $field = array('id' ,'title','synopsis','group','type','img','create_time');
 
         if(!$returnData)
            exit($this->getError());
@@ -145,7 +146,8 @@ class MediaDataModel extends Model {
         $returnData = $this->selectDataCustom($data, $order, $page, $field);
         return $returnData;
     }
-        /**
+    
+    /**
      * [getPicturesShows 获得图文显示]
      * @param  integer $group  [description]
      * @param  integer $status [description]

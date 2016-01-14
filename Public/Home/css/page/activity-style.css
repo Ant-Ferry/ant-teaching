@@ -4,10 +4,9 @@
 	  padding: 0px;
 	}
 	#association-div .panel .col-md-9{
-    background-color: #ECF0F1;
+    background-color: #F4F4F4;
   }
 	.browser {
-	  background: #ECF0F1;
 	  color: white;
 	  min-height: 428px;
 	  max-height: 428px;
@@ -16,7 +15,7 @@
 	.browser-side {
     float: left;
     padding: 22px 20px;
-    width: 290px;
+    width: 280px;
 	}
     .browser-author {
     background: url("../images/demo/browser-author.jpg") center center no-repeat;
@@ -77,13 +76,16 @@
   .nav-tabs>li {
    float: none;
    margin-bottom: -1px;
+   border-bottom: 1px solid #ddd;
   }
   .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
-    border: 0px solid #ddd;
+    margin-bottom: -1px;
+    border-bottom: 1px solid #3498DB;
   }
-   #myTab>li{
-    border: 1px solid #ddd;
+  .nav.nav-tabs>li.active>a, .nav.nav-tabs>li:hover>a {
+    border-bottom: 1px solid #3498DB;
   }
+
   #myTab>li>a {
     padding: 4px 10px;
   }
@@ -103,21 +105,27 @@
   }
   #book-news .media-heading {
     font-size: 22px;
+    color: #0E0E0E;
   }
-  
+
   #book-news,.book-news-tab {
-    padding: 15px 0px; 
+    padding: 0px; 
     min-height: 210px;
-    max-height: 210px;
+    font-size: 16px;
+  }
+  #book-news {
+    padding:10px 0;
   }
   .book-news-tab {
     background-color: #BDC3C7;
   }
   .media, .media-body {
-    font-size: 18px;
+    font-size: 16px;
+    color: #999999;
   }
   .panel-default {
     padding: 0px;
+    border-color: #ddd;
   }
   
   /*摄影展示*/
@@ -163,3 +171,5 @@
    border: 6px solid white;
   }
   .shoot-book a{color: #fff;}
+
+  #myTabContent{}

@@ -17,11 +17,19 @@ use Think\Upload\Driver\Qiniu\QiniuStorage;
 class QiniuController extends AdminController {
 
     public function _initialize(){
+        /*
         $config = array(
             'accessKey'=>'__ODsglZwwjRJNZHAu7vtcEf-zgIxdQAY-QqVrZD',
             'secrectKey'=>'Z9-RahGtXhKeTUYy9WCnLbQ98ZuZ_paiaoBjByKv',
             'bucket'=>'blackwhite',
             'domain'=>'blackwhite.u.qiniudn.com'
+        );
+        */
+        $config = array(
+            'accessKey'=>'obONUmKYN5b49A2jJnseSy5IrPp17EHcUsS1fgEy',
+            'secrectKey'=>'kEOTRa9MXP6nsARKmKYC6GyDF3Q2wqdc7mXSrT0T',
+            'bucket'=>'antferry007',
+            'domain'=>'7xobxt.com1.z0.glb.clouddn.com'
         );
         $this->qiniu = new QiniuStorage($config);
         parent:: _initialize();
@@ -66,6 +74,10 @@ class QiniuController extends AdminController {
         redirect($url);
     }
 
+    /**
+     * [rename 修改名字]
+     * @return [type] [description]
+     */
     public function rename(){
         $key = I('get.file');
         $new = I('new_name');
@@ -134,13 +146,18 @@ tpl;
     //上传单个文件 用uploadify
     public function uploadOne(){
         $file = $_FILES['qiniu_file'];
+         \Think\Log::record(var_export($file,true));
         $file = array(
             'name'=>'file',
             'fileName'=>$file['name'],
             'fileBody'=>file_get_contents($file['tmp_name'])
         );
         $config = array();
+       
         $result = $this->qiniu->upload($config, $file);
+        //array ('hash' => 'ltst77KaXCcH_K88brfT1hkUfyMP','key' => '562edf064cc2f.mp4',)
+        //http://7xobxt.com1.z0.glb.clouddn.com/562edf064cc2f.mp4
+        \Think\Log::record(var_export($result,true));
         if($result){
             $this->success('上传成功','', $result);
         }else{

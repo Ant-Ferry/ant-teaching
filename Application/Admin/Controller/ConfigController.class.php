@@ -52,7 +52,9 @@ class ConfigController extends AdminController {
             if($data){
                 if($Config->add()){
                     S('DB_CONFIG_DATA',null);
-                    $this->success('新增成功', U('index'));
+                    //$this->success('新增成功', U('index'));
+                    $this->success('新增成功', Cookie('__forward__'));
+                    //
                 } else {
                     $this->error('新增失败');
                 }
@@ -60,9 +62,23 @@ class ConfigController extends AdminController {
                 $this->error($Config->getError());
             }
         } else {
+            $group = I('get.group',-1);
             $this->meta_title = '新增配置';
             $this->assign('info',null);
-            $this->display('edit');
+
+            switch ($group) {
+                case '6':
+                    $values = D('MediaData')->getPicturesShows(5);
+                    $this->assign('values',$values);
+                    $this->assign('group',6);
+                    $this->display('linksedit');
+                    break;
+                
+                default:
+                    $this->display('edit');
+                    break;
+            }
+            
         }
     }
 
@@ -198,5 +214,59 @@ class ConfigController extends AdminController {
         }else{
             $this->error('非法请求！');
         }
+    }
+
+
+    public function links(){
+        /* 查询条件初始化 */
+      
+        $map = array();
+        $map['status'] =  1;
+        $map['group'] = 6;
+       
+        if(isset($_GET['name'])){
+            $map['name']    =   array('like', '%'.(string)I('name').'%');
+        }
+
+        $list = $this->lists('Config', $map,'sort,id');
+        // 记录当前列表页的cookie
+        Cookie('__forward__',$_SERVER['REQUEST_URI']);
+        //$this->assign('group',C('CONFIG_GROUP_LIST'));
+        //$this->assign('group_id',I('get.group',6));
+        $this->assign('list', $list);
+        $this->meta_title = '配置管理';
+        $this->display();
+    }
+
+    public function linksedit($id = 0){
+        if(IS_POST){
+            $Config = D('Config');
+            $data = $Config->create();
+            if($data){
+                if($Config->save()){
+                    S('DB_CONFIG_DATA',null);
+                    //记录行为
+                    action_log('update_config','config',$data['id'],UID);
+                    $this->success('更新成功', Cookie('__forward__'));
+                } else {
+                    $this->error('更新失败');
+                }
+            } else {
+                $this->error($Config->getError());
+            }
+        } else {
+            $info = array();
+            /* 获取数据 */
+            $info = M('Config')->field(true)->find($id);
+            if(false === $info){
+                $this->error('获取配置信息错误');
+            }
+            $this->assign('info', $info);
+            //$this->meta_title = '编辑配置';
+            $this->meta_title = 'URL链接配置';
+            $values = D('MediaData')->getPicturesShows(5);
+            $this->assign('values',$values);
+            $this->display();
+        }    
     }
 }

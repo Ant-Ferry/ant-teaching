@@ -2,15 +2,15 @@
 <!-- 子导航
 ================================================== -->
 <div class="subNav">
-	 <div class="navbar-inner" style="min-height: 28px;background-image: -webkit-linear-gradient(top, #1DB7E5, #21A3CA);border-radius: 0px;">
+	 <div class="navbar-inner" style="">
     </div>
 </div>
 
 <!-- 顶部包
 ================================================== -->
-<div class="topWrap head-div">
+<div class="topWrap head-div hidden">
 	<div class="container ">
-    <h4><strong><a class="brand" href="{:U('index/index')}">{:C('WEB_SITE_TITLE')}</a></strong><br>
+    <h4><a class="brand" href="{:U('index/index')}">{:C('WEB_SITE_TITLE')}</a><br>
       <small>{:C('WEB_ADDRESS')}</small>
     </h4>
 	</div>
@@ -21,6 +21,10 @@
 <div class="navDiv">
     <div class="container navbar navbar-embossed"  role="navigation" >
         <div class="navbar-collapse collapse ">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="http://{:C('WEB_ADDRESS')}">{:C('WEB_SITE_TITLE')}</a>
+            </div>
+
             <ul class="nav navbar-nav navbar-left">
                 <think:nav name="nav">
                     <eq name="nav.pid" value="0">

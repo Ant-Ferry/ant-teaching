@@ -19,19 +19,23 @@ class InformationController extends HomeController {
 
   		$note = $this->getNote();
   		$this->assign('note',$note);
-
+      //获得经典视频
   		$classicalVideo = $this->getClassicalVideo();
   		$this->assign('classicalVideo',$classicalVideo);
-
+      //获得成功人士
   		$successPeople = $this->getSuccessPeople();
   		$this->assign('successPeople',$successPeople);
-
+      //获得领域专家
   		$fieldExpert = $this->getFieldExpert();
   		$this->assign('fieldExpert',$fieldExpert);
-
+      //获得优秀教师
+      $goodTeach = $this->getGoodTeach();
+      $this->assign('goodTeach',$goodTeach);
+      //获得热门资讯
   		$hotTopics = $this->getHotTopics();
   		$this->assign('hotTopics',$hotTopics);
 			
+      Cookie('__forward__',$_SERVER['REQUEST_URI']);
     	$this->display();
     }
 
@@ -39,30 +43,31 @@ class InformationController extends HomeController {
 
     public function getNote(){
     	$note = array ("img"=>"/page/information/keyword.jpg","title"=>"图片1");
-    	
-	   return $note;
+	    return $note;
     }
 
-    public function getClassicalVideo(){
-    	 
+    public function getClassicalVideo(){ 
        $Resource = D('Resource');
        $classicalVideo = $Resource->getInformation();
        return $classicalVideo;
     }
 
     public function getSuccessPeople(){
-    	
       $PersonnelData = D('PersonnelData');
       $successPeople = $PersonnelData->getSuccessPeople();
-      //var_dump($successPeople);
       return $successPeople;
     }
 
-   	public function getFieldExpert($start=1, $rows=4){
-    	
+   	public function getFieldExpert(){
       $PersonnelData = D('PersonnelData');
       $fieldExpert = $PersonnelData->getFieldExpert();
       return $fieldExpert;
+    }
+
+    public function getGoodTeach(){
+      $PersonnelData = D('PersonnelData');
+      $GoodTeach = $PersonnelData->getGoodTeach();
+      return $GoodTeach;
     }
 
     public function getHotTopics(){

@@ -1,0 +1,86 @@
+<extend name="Base/common"/>
+
+<block name="style">
+  <link href="__CSS__/page/new-style.css" rel="stylesheet">
+</block>
+
+<block name="container" >
+  <!--头部标题部分-->
+  <section id="column">
+    <ol class="breadcrumb">
+      <li ><span class="fui-home">&nbsp;&nbsp;</span><a href="__MODULE__/index"><b>主页</b></a></li>
+      <li >{$PageFeature.Title}</li>
+      <li class="active">
+        <switch name="mediaValue.group" >
+          <case value="1" >特色社团</case>
+          <case value="2" >Ebook 读书节</case>
+          <case value="3" >美丽校园摄影大赛</case>
+          <case value="4" >作品展示</case>
+          <case value="5" >文档资料</case>
+          <default />资源
+        </switch>
+      </li>
+    </ol>
+  </section>
+  <!--内容部分-->
+  <div class="row">
+    <!--排版 Stater--> 
+    <div class="col-sm-9">
+    <article id=""  class="indexMain MarginLeft-10" >
+      <div class="contentTitle">          
+        <b>{$mediaValue.title}</b>
+      </div> 
+      <div>
+      <div  class="contentTime">{$mediaValue.time|default=time()|date='Y年m月d日',###} &nbsp;&nbsp;  点击:[ {$mediaContent['bookmark']+1} ]</div>
+     
+      <!-- 内容 statr-->
+      <section class="fck">
+        <!-- Cx标签 statr-->
+        {$mediaContent.content}
+        <!-- Cx标签 end  -->
+      </section>
+      <!-- 内容 end-->
+    </article>
+    </div>
+    <!--排版 End-->
+
+    <!--排版 Stater-->
+    <div class="col-sm-3">
+    <article id="" class="indexMain MarginRight-10" >
+      <div class="indexSub indexSub1">
+          <h6 class="indexTitle title1"><span class="fui-bubble">&nbsp;</span>
+            <switch name="mediaValue.group" >
+              <case value="1" >特色社团</case>
+              <case value="2" >Ebook 读书节</case>
+              <case value="3" >美丽校园摄影大赛</case>
+              <case value="4" >作品展示</case>
+              <case value="5" >文档资料</case>
+              <default />资源
+            </switch>列表
+          </h6>
+
+          <ul class="indexMedia">
+            <!-- Cx标签 statr-->
+            <foreach name="groupList" item="vo" key="k" >
+                <li class=<eq name="vo.id" value="$mediaValue.id">"active"</eq>><a href="{:U('Show/index?type=3&id='.$vo['id'])}" >{$vo.title}</a></li>
+            </foreach>
+            <!-- Cx标签 end-->
+          </ul>
+      </div>
+    </article>
+    </div>
+    <!--排版 End-->
+  </div>
+
+</block>
+<block name="script">
+    <script>
+    $(".activity-item").mouseover(function(){
+        $(this).addClass("activity-shadow");
+    });
+     $(".activity-item").mouseout(function(){
+        $(this).removeClass("activity-shadow");
+    });
+    </script>
+</block>
+  

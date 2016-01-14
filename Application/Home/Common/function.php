@@ -69,31 +69,3 @@ function get_nav_url($url){
     return $url;
 }
 
-/**
- * [get_file_field 获得文件信息]
- * @param  [type] $value [id值]
- * @param  [type] $field [查询字段值：path,mime,]
- * @return [type]        [结果]
- */
-function get_file_field($value = null, $field = null){
-    if(empty($value)){
-        return false;
-    }
-
-    //拼接参数
-    $map['id'] = $value;
-    $info = M('File')->where($map);
-    if($field != 'path'){
-        if(empty($field)){
-            $info = $info->field(true)->find();
-        }else{
-            $info = $info->getField($field);
-        }
-    } else {
-       $setting = C('DOWNLOAD_UPLOAD');
-       $data = $info->field(true)->find();
-       $info = substr($setting['rootPath'], 1).$data['savepath'].$data['savename']; //在模板里的url路径
-    }
-
-    return $info;
-}

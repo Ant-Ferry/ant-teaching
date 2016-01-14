@@ -13,7 +13,7 @@
   /*
   .indexSub .indexTitle { margin-bottom: 15px; padding-bottom: 5px; background-position: 10px center; border-bottom: 1px #000 dashed; }
   */
-  .indexSub .indexTitle {border-left: 1px #000 dashed; padding-left: 8px;}
+  .indexSub .indexTitle {border-left: 1px #000 dashed; padding-left: 8px;    height: 24px;}
   .tc {text-align: center;}
   a.more { display: inline-block; margin: 10px auto; width: 160px; height: 30px; line-height: 30px; background: #266da3; color: #fff;text-align: center;font-size: 16px;}
 
@@ -90,7 +90,7 @@ background: rgba(0,0,0,.6);
 ul { -webkit-margin-end: 10px; -webkit-padding-start: 5px;}
 ul { list-style: square inside url('../../images/page/public/dian1.gif')}
 .indexMedia {list-style: square inside url('../../images/page/news/icon_pop.png'); }
-.indexMedia li {font-size: 14px; padding: 5px; margin-bottom: 5px; border-bottom: 1px #e2e2e2 dashed; max-height: 54px; overflow:hidden;}
+.indexMedia li {font-size: 14px; padding: 5px; margin-bottom: 5px; border-bottom: 1px #e2e2e2 double; max-height: 54px; overflow:hidden;}
 .indexMedia .active{ background-color: #F7F7F7; color: #3498DB;}
 .indexMedia .active a{ color:#3498DB; width:100%;}
 

@@ -2,7 +2,7 @@
 .btn{
 padding: 4px 15px;
 font-size: 18px;
-font-weight: 600;
+font-weight: 400;
 }
 
 .login-form ,.register-form{
@@ -18,13 +18,8 @@ font-size: 18px;
 text-align: center;
 }
 
-.panel-heading h2{margin: 18px 10px 10px;}
-label {
-display: inline-block;
-max-width: 100%;
-margin-bottom: 5px; 
-font-weight: bold;
-}
+.panel-heading h2{margin: 14px 10px 10px;  font-size: 38px;}
+label {display: inline-block; max-width: 100%; margin-bottom: 5px; font-weight: 400;}
 
 .avatar {
 -webkit-border-radius: 50%;
@@ -44,4 +39,238 @@ padding-bottom: 25px;
 .teacher-type ,.about { color: #999999; padding-left:20px; }
 .white-background{ background-color: #FFFFFF; padding: 20px 15px; margin: 20px 0px 10px ;}
 .text-end {text-align: end;padding-right: 10px;}
-#myTabContent{padding: 20px 10px 30px;}
+#myTabContent{padding: 10px 4px 30px;}
+
+/*个人信息 首页*/
+.wlfg-wrap .label-name{
+	float: left;
+	width: 120px;
+	text-align: right;
+	height: 40px;
+	line-height: 40px;
+	color: #656e73;
+	font-size: 14px;
+}
+.wlfg-wrap .rlf-group{
+	margin-left: 130px;
+}
+
+
+.rlf-radio-group {
+    padding: 7px 0 0 7px;
+    vertical-align: middle;
+}
+.rlf-radio-group label {
+    margin-right: 20px;
+}
+
+
+.rlf-input {
+    border: 1px solid #ccc;
+    width: 360px;
+    min-height: 38px;
+    line-height: 24px;
+    padding: 7px 7px 7px 48px;
+    font-size: 14px;
+    background: #ffffff url(../../images/rl-sprite.png) no-repeat -80px -678px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    /* box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); */
+    transition: border-color 0.2s;
+    -webkit-transition: border-color 0.2s;
+    -moz-transition: border-color 0.2s;
+    -o-transition: border-color 0.2s;
+    transition: padding 0.15s;
+    -webkit-transition: padding 0.15s;
+    -moz-transition: padding 0.15s;
+    -o-transition: padding 0.15s;
+    border-color: #d0d6d9;
+}
+.rlf-input-nick {
+    background-position: -80px -726px;
+}
+.rlf-input-exit {
+    background-position: -80px -774px;
+}
+
+.textarea {
+    border: 1px solid #d0d6d9;
+    width: 360px;
+    line-height: 1.6em;
+    font-size: 14px;
+    padding: 7px;
+    resize: none;
+    transition: border-color 0.2s;
+    -webkit-transition: border-color 0.2s;
+    -moz-transition: border-color 0.2s;
+    -o-transition: border-color 0.2s;
+}
+/*按钮*/
+
+.btn-block {
+    display: block;
+    width: auto;
+}
+
+.rlf-btn-green {
+    color: #fff;
+    font-size: 14px;
+    background-color: #39b94e;
+    height: 40px;
+    line-height: 40px;
+    width: 160px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.2s;
+    -webkit-transition: background-color 0.2s;
+    -moz-transition: background-color 0.2s;
+    -o-transition: background-color 0.2s;
+}
+.profile-btn { width: 360px;border: none;}
+
+.btn-full{width: 317px;}
+
+.rlf-btn-green:hover{
+	background-color: #33a646;
+}
+
+/*上传头像页*/
+.setting-avator { padding: 60px 150px; text-align: center; }
+.avator-img { position: relative; line-height: 0; }
+.avator-img img { width: 220px; height: 220px; border: none; box-shadow: 0 1px 4px rgba(0,0,0,.25); border-radius: 2px; background:url(../../images/page/public/avatar.png); background-size:220px 220px; }
+.avator-try { border: none; cursor: pointer; line-height: 16px;
+    padding-left: 20px;margin: 10px;font-size: 12px;font-weight: bold;color: #444; background: #fff url(../../images/setting-ch.png) no-repeat 0 0; }
+.avator-btn-group {position: relative; height: 220px; margin-left: 260px; width: 220px; }
+.avator-btn-wrap input {
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    font-size: 50px;
+    background: none;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    cursor: pointer;
+}
+.avator-btn-inner {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.avator-btn-inner .avator-btn-wrap {
+    height: 40px;
+    margin: 0;
+}
+.avator-btn-wrap {
+    position: relative;
+    margin-top: 10px;
+    height: 30px;
+    overflow: hidden;
+}
+
+.avator-btn-inner .avator-btn-fake:link {
+    height: 40px;
+    line-height: 40px;
+}
+.avator-btn-fake:link {
+    display: block;
+    height: 30px;
+    color: #fff;
+    line-height: 30px;
+    background: #363d40;
+    text-align: center;
+}
+
+/**/
+.mmsg-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    border: 2px solid #fff;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    -moz-box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 9999;
+}
+.mmsg-background {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    opacity: 0.9;
+    filter: alpha(opacity=90);
+    z-index: -1;
+}
+.alert-success .mmsg-background {
+    background: #2ea7e0;
+}
+.alert-success-error .mmsg-background {
+    background: #E02E2E;
+}
+.mmsg-content {
+    padding: 10px 20px 10px 47px;
+    font-size: 18px;
+    color: #fff;
+}
+
+.mmsg-content p {
+    margin: 0;
+    font-size: 18px;
+    color: #fff;
+}
+
+.alert-success .mmsg-icon {
+    background-position: 0 -40px;
+}
+.alert-success-error .mmsg-icon {
+    background-position: 0 0px;
+}
+.mmsg-icon {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 30px;
+    height: 30px;
+    background: url(../../images/msgbox-sprite.png) no-repeat;
+}
+
+.teacher-type h6 small {
+    font-size: 16px;
+    color: #096;
+}
+
+.breadcrumb {
+    padding: 4px;
+    margin-bottom: 20px;
+    background-color: #353535;
+    border-radius: 0px;
+    -webkit-padding-start: 4px;
+}
+
+.breadcrumb li a {
+    color: #FFFFFF;
+}
+
+.uploadify-queue-item {
+    width: 360px;
+}
+.mail-input{
+    display: inline-block;;
+    height: 24px;
+    width: 24px;
+    margin: 0 8px;
+    background: url(../../images/mail.png) no-repeat 0px 0px;
+    background-size:24px 48px;
+}
+.mail-input-open{
+    background-position:0px -24px; 
+}
+/*
+    
+ */
+
+.breadcrumb .active a{
+    color: #999;
+}

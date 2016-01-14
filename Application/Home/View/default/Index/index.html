@@ -24,17 +24,17 @@
                 <div class="col-md-4">
                   <article class="activity-item">
                     <div class="activity-img">
-                      <a href="#" class="activity-title" >
-                        <img src="" style="background: url(__IMG__{$vo.img}) no-repeat center;" height="100%" width="100%">
+                      <a href="{:U('Activity/index')}{$vo.link}" class="activity-title" >
+                        <img style="background: url(__IMG__{$vo.img}) no-repeat center;" height="100%" width="100%">
                       </a>
                      </div>
                     <div class="activity-info"> 
                       <div class="activity-title">
-                        <a>{$vo.title}</a><hr/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="{:U('Activity/index')}{$vo.link}">{$vo.title}</a><hr/>&nbsp;&nbsp;&nbsp;&nbsp;
                         <span>{$vo.summary}</span>
                       </div>
                       
-                      <div class="activity-button">
+                      <div class="activity-button hidden">
                         <a class="btn btn-info btn-large btn-block" href="{:U('Activity/index')}{$vo.link}"><span><b>凑个热闹</b></span></a>
                       </div>
                     </div>
@@ -44,52 +44,43 @@
             <!-- Cx标签 end-->
         </section>
         <!--横向层二End-->
-        
-       <section class="row demo-row">
+    
+      <section class="row demo-row">
         <div class="text-line gray">
-            <h5><span>关于我们</span></h5>
+            <h5><span>名师风采</span></h5>
             <div class="line"></div>
           </div>
       </section>
-
       <!--横向层三Start--> 
       <section class="row demo-row" >
-        <div class="col-md-8">
-          <article class="panel panel-default">
-            <div class="panel-heading hidden">
-            <h3 class="panel-title"><span class="fui-eye"></span>&nbsp;&nbsp;{$aboutUs.0.headTitle}</h3>
-            </div>
-            <div class="panel-body block3-p-body">
-               <p>
-                <strong>{$AboutUs.Platform.title}</strong><br>
-                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <span>{$AboutUs.Platform.value}</span></p>
-            </div>
-          </article>
-        </div>
+        <!-- Cx标签 statr-->
+        <foreach name="famousTeach" item="vo" key="k" length="ln">
+            <div class="col-md-3">
+              <article class="activity-item">
+                <div class="activity-img" style="padding-top: 25px; height:220px;">
+                  <a href="{:U('Home/Teacher/index',array('id'=>$vo['id']))}" class="activity-title " >
+                    <img class="img-circle center-block" src="{$vo.portrait|get_avator='path'}" height="180px" width="210px">
+                  </a>
+                 </div>
+                <div class="activity-info" style="min-height: 110px;"> 
+                  <div class="activity-title">
+                    <a href="{:U('Home/Teacher/index',array('id'=>$vo['id']))}">{$vo.name}</a><hr/>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span>{$vo.synopsis}</span>
+                  </div>
 
-        <div class="col-md-4">
-           <article class="panel panel-default">
-            <div class="panel-heading hidden">
-            <h3 class="panel-title"><span class="fui-eye"></span>&nbsp;&nbsp;{$aboutUs.1.headTitle}</h3>
+                </div>
+              </article>
             </div>
-            <div class="panel-body block3-p-body">
-               <p>
-                <strong>联系方式</strong><br>
-                <span>
-                  <span class="fui-mail">&nbsp;{$AboutUs.Email.title}：</span>
-                    <small><a href="mailto: {$AboutUs.Email.value}">{$AboutUs.Email.value}</a></small><br/>
-                  <span class="fui-new">&nbsp;留言板：</span>
-                    <small><a href="{:U('Message/index')}" >进入</small><br/>
-                  <span class="fui-wordpress">&nbsp;{$AboutUs.WordPess.title}：</span>
-                    <small><a href="{$AboutUs.WordPess.value}" >进入</a></small><br/>
-                  <span class="icon-dizhi"> &nbsp;{$AboutUs.Address.title}：</span>
-                    <small><a>{$AboutUs.Address.value}</a></small><br/>
-                </span></p>
-            </div>
-          </article> 
+        </foreach>
+        <!-- Cx标签 end-->
+      
+      </section>
+      <section class="row demo-row">
+        <div class="text-line gray">
+          <h5 style="font-size: 16px; font-weight: 400;">
+              <span class="activity-item" style="border-radius: 16px; padding:4px 12px;border: 1px solid rgb(66, 139, 202);">&nbsp;<a href="{:U('/Home/Information/index#tabVideo3')}">更多</a>&nbsp;</span>
+          </h5>
         </div>
-
       </section>
    
 </block>

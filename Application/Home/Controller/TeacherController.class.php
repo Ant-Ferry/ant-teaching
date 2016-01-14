@@ -19,15 +19,22 @@ class TeacherController extends HomeController {
     public function index($id='-1'){
 
     	if($id=='-1'){
-            $this->error('页面不存在','/Article/error',1);
+            $this->error('页面不存在',U('/Article/error'),1);
         }
         
         //或得人员id 
 		$Personnel = $this->selectPersonnel($id);
 		if(!$Personnel){
-			$this->error('页面不存在','/Article/error',1);
+			$this->error('页面不存在',U('/Article/error'),1);
 		}
 		$this->assign('personnel',$Personnel);
+
+		if($Personnel['type']==1){
+			$info = D('UcenterEdu')->where(array('tid' => $Personnel['id'], 'status'=>1))->find();
+			if(isset($info)){
+				$this->assign('teachInfo',$info);
+			}
+		}
 
 		//获得资源列表
 		$Resources = $this->getResources($id);
@@ -36,6 +43,80 @@ class TeacherController extends HomeController {
         $this->display();
     }
 
+    /**
+     * [testlist 作业列表]
+     * @param  string $id [description]
+     * @return [type]     [description]
+     */
+    public function testlist($id='-1'){
+
+    	if($id=='-1'){
+            $this->error('页面不存在',U('/Article/error'),1);
+        }
+        
+        //或得人员id 
+		$Personnel = $this->selectPersonnel($id);
+		if(!$Personnel){
+			$this->error('页面不存在',U('/Article/error'),1);
+		}
+		$this->assign('personnel',$Personnel);
+
+		if($Personnel['type']==1){
+			$info = D('UcenterEdu')->where(array('tid' => $Personnel['id'], 'status'=>1))->find();
+			if(isset($info)){
+				$this->assign('teachInfo',$info);
+			}
+		}
+
+		//获得作业列表
+		//$edu = D('UcenterEdu');
+		//$teachValue = $edu->getEduMember($id);
+		
+		//输出作业布置列表
+		$map['tid'] = $id;
+		$map['status'] = 1;
+		$list = $this->lists('TaskList', $map,'create_time desc,id');
+		
+		$this->assign('list', $list);
+        $this->display();
+    }
+
+    /**
+     * [作业显示 ]
+     * @param  string $id [description]
+     * @return [type]     [description]
+     */
+    public function testShow($id='-1',$page='-1'){
+
+    	if($id=='-1'||$page=='-1'){
+            $this->error('页面不存在',U('/Article/error'),1);
+        }
+        
+        //或得人员id 
+		$Personnel = $this->selectPersonnel($id);
+		if(!$Personnel){
+			$this->error('页面不存在',U('/Article/error'),1);
+		}
+		$this->assign('personnel',$Personnel);
+
+		if($Personnel['type']==1){
+			$info = D('UcenterEdu')->where(array('tid' => $Personnel['id'], 'status'=>1))->find();
+			if(isset($info)){
+				$this->assign('teachInfo',$info);
+			}
+		}
+
+		//获得作业 
+		$info = D('TaskList')->where(array('id' =>$page ))->find();
+		if(!isset($info)){
+			$this->error('页面不存在',U('/Article/error'),1);
+		}
+		
+		$this->assign('info',$info);
+
+        $this->display();
+    }
+    
 	/**
 	 * [selectPersonnel 查询管理人员]
 	 * @param  [type] $id [description]

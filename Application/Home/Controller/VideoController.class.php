@@ -22,22 +22,56 @@ class VideoController extends HomeController {
         if($id=='-1'){
             $this->error('页面不存在','/Article/error',1);
         }
+        if($uid = is_login()){
 
-        //获得基本信息
-        $Details = $this->getDetails($id);
-        $this->assign('Details',$Details);
+            //获得基本信息
+            $Details = $this->getDetails($id);
+            $this->assign('Details',$Details);
 
-        //获得视频详情
-        $SetList = $this->getSetList($Details['set']);
-        $this->assign('SetList',$SetList);
-        $this->addBookmark($id);
+            //获得视频详情
+            $SetList = $this->getSetList($Details['set']);
+            $this->assign('SetList',$SetList);
+            $this->addBookmark($id);
+            $this->addAnnal($uid,$id,$Details['title'],$Details['authority']);
+
+            $this->display();
+
+        } else {
+            //$this->redirect('User/login')
+            // 记录当前列表页的cookie
+            Cookie('__forward__',$_SERVER['REQUEST_URI']);
+            $this->error('登陆后才可观看视频',U('Home/User/login'),3);
+        }
         
-        $this->display();
     }
 
     public function addBookmark($id){
         $Resource = D('Resource');
         $returnData = $Resource -> addBookmark($id);
+    }
+
+    public function addAnnal($uid,$vid,$title,$narrator){
+        $Annal = D('PlayVideo');
+        //$returnData = $Annal -> ;
+        //先查询是否有记录
+        if(!$Annal->where(array('vid' => $vid ))->select())
+        {
+            $map = array();
+            $map['uid'] = $uid;
+            $map['vid'] = $vid;
+            $map['title'] = $title;
+            $map['narrator'] = $narrator;
+            $map['create_time'] = NOW_TIME;
+            $map['status'] = 1;
+            //没有记录再添加
+            $returnData = $Annal->create($map,1);
+            if(!$returnData)
+               exit($this->getError());
+            else
+                $Annal->add($map);
+           
+        }
+        
     }
 
    /**
@@ -63,10 +97,6 @@ class VideoController extends HomeController {
         //var_dump($returnData);
         return $returnData;
     }
-
-
-
-
 
     /**
      * [getMediaValue 获得资源值]

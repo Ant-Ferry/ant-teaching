@@ -36,6 +36,18 @@
 							<input type="text" name="type" class="text input-large" value="{$info.type|default='1'}">
 						</div>
 					</div>
+
+					<div class="form-item">
+						<label class="item-label">
+							是否著名<span class="check-tips">
+							（类型：0-不著名 1-著名 ,想设置教师为名师的话，请将此类型 设置为著名)
+							</span>
+						</label>
+						<div class="controls">
+							<input type="text" name="famous" class="text input-large" value="{$info.famous|default='0'}">
+						</div>
+					</div>
+
 					<div class="form-item">
 						<label class="item-label">
 							在职单位<span class="check-tips">
@@ -54,7 +66,7 @@
 						<input type="hidden" name="portrait" id="img" value="{$info['portrait']|default=''}"/>
 						<div class="upload-img-box">
 						<notempty name="info['portrait']">
-							<div class="upload-pre-item"><img src="{$info.portrait|get_cover='path'}"/></div>
+							<div class="upload-pre-item"><img src="{$info.portrait|get_avator='path'}"/></div>
 						</notempty>
 						</div>
 					</div>
@@ -107,7 +119,7 @@
 				        "swf"             : "__STATIC__/uploadify/uploadify.swf",
 				        "fileObjName"     : "download",
 				        "buttonText"      : "上传图片",
-				        "uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+				        "uploader"        : "{:U('File/uploadAvator',array('session_id'=>session_id()))}",
 				        "width"           : 120,
 				        'removeTimeout'	  : 1,
 				        'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
@@ -134,7 +146,7 @@
 				        }
 				    }
 
-				   	//上传图片
+				   	//上传视频
 				    /* 初始化上传插件 */
 					$("#upload_file").uploadify({
 				        "height"          : 30,

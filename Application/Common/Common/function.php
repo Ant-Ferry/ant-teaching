@@ -41,6 +41,19 @@ function is_administrator($uid = null){
 }
 
 /**
+ * 检测当前用户是否为教员
+ * @return boolean true-教员，false-非教员
+ * @author 麦当苗儿 <zuojiazi@vip.qq.com>
+ */
+function is_eduistrator($uid = null){
+    $uid = is_null($uid) ? is_login() : $uid;
+
+    //调用接口获取用户信息
+    $user_edu = D('UcenterEdu');
+    return $uid ? $user_edu->getEduId($uid): $uid;
+}
+
+/**
  * 字符串转换为数组，主要用于把分隔符调整到第二个参数
  * @param  string $str  要分割的字符串
  * @param  string $glue 分割符
@@ -942,6 +955,122 @@ function get_cover($cover_id, $field = null){
 }
 
 /**
+ * 获取头像图片
+ * @param int $cover_id
+ * @param string $field
+ * @return 完整的数据  或者  指定的$field字段值
+ * @author huajie <banhuajie@163.com>
+ */
+function get_avator($avator_id, $field = null){
+    if(empty($avator_id)){
+        return false;
+    }
+    $picture = M('Avator')->where(array('status'=>1))->getById($avator_id);
+    if($field == 'path'){
+        if(!empty($picture['url'])){
+            $picture['path'] = $picture['url'];
+        }else{
+            $picture['path'] = __ROOT__.$picture['path'];
+        }
+    }
+    return empty($field) ? $picture : $picture[$field];
+}
+
+/**
+ * 获取任务文件信息
+ * @param int $cover_id
+ * @param string $field
+ * @return 完整的数据  或者  指定的$field字段值
+ * @author huajie <banhuajie@163.com>
+ */
+function get_task($avator_id, $field = null){
+    if(empty($avator_id)){
+        return false;
+    }
+    //onethink_file_task
+    $picture = M('FileTask')->where(array('status'=>1))->getById($avator_id);
+    if($field == 'path'){
+        if(!empty($picture['url'])){
+            $picture['path'] = $picture['url'];
+        }else{
+            $picture['path'] = __ROOT__.$picture['path'];
+        }
+    }
+    return empty($field) ? $picture : $picture[$field];
+}
+
+/**
+ * 获取任务值文件信息
+ * @param int $cover_id
+ * @param string $field
+ * @return 完整的数据  或者  指定的$field字段值
+ * @author huajie <banhuajie@163.com>
+ */
+function get_task_list($avator_id, $field = null){
+    if(empty($avator_id)){
+        return false;
+    }
+    //onethink_file_task
+    $picture = M('TaskList')->where(array('status'=>1))->getById($avator_id);
+    return empty($field) ? $picture : $picture[$field];
+}
+
+/**
+ * 获取教师信息
+ * @param int $cover_id
+ * @param string $field
+ * @return 完整的数据  或者  指定的$field字段值
+ * @author huajie <banhuajie@163.com>
+ */
+function get_teach($avator_id, $field = null){
+    if(empty($avator_id)){
+        return false;
+    }
+    //onethink_file_task
+    $picture = M('PersonnelData')->where(array('status'=>1))->getById($avator_id);
+    return empty($field) ? $picture : $picture[$field];
+}
+
+/**
+ * [get_member 获得个人信息]
+ * @param  [type] $avator_id [description]
+ * @param  [type] $field     [description]
+ * @return [type]            [description]
+ */
+function get_member($avator_id, $field = null){
+    if(empty($avator_id)){
+        return false;
+    }
+    //onethink_file_task
+    $picture = M('Member')->where(array('status'=>1,'uid'=>$avator_id))->find();
+    return empty($field) ? $picture : $picture[$field];
+}
+
+function get_ucenter_enu($avator_id, $field = null){
+    if(empty($avator_id)){
+        return false;
+    }
+    //onethink_file_task
+    $picture = M('UcenterEdu')->where(array('status'=>1))->getById($avator_id);
+    return empty($field) ? $picture : $picture[$field];
+}
+
+function get_teach_name($avator_id,$field = null){
+   if(is_eduistrator($avator_id)!=-1){
+        $teach = get_ucenter_enu(is_eduistrator($avator_id),'tid');
+        $teach = get_teach($teach,'name');
+        return $teach; 
+   } 
+   if(!is_administrator($avator_id)){
+        return '学生';
+   }else{
+        return '管理员';
+   }
+
+  
+}
+
+/**
  * 检查$pos(推荐位的值)是否包含指定推荐位$contain
  * @param number $pos 推荐位的值
  * @param number $contain 指定推荐位
@@ -1015,4 +1144,38 @@ function check_category_model($info){
     $cate   =   get_category($info['category_id']);
     $array  =   explode(',', $info['pid'] ? $cate['model_sub'] : $cate['model']);
     return in_array($info['model_id'], $array);
+}
+
+
+/**
+ * [get_file_field 获得文件信息]
+ * @param  [type] $value [id值]
+ * @param  [type] $field [查询字段值：path,mime,url]
+ * @return [type]        [结果]
+ */
+function get_file_field($value = null, $field = null){
+    if(empty($value)){
+        return false;
+    }
+
+    //拼接参数
+    $map['id'] = $value;
+    $info = M('File')->where($map);
+    if($field == 'mime'){
+        if(empty($field)){
+            $info = $info->field(true)->find();
+        }else{
+            $info = $info->getField($field);
+        }
+
+    } else if($field == 'path') {
+       $setting = C('DOWNLOAD_UPLOAD');
+       $data = $info->field(true)->find();
+       $info = substr($setting['rootPath'], 1).$data['savepath'].$data['savename']; //在模板里的url路径
+    } else if($field == 'url'){
+       $data = $info->field(true)->find();
+       $info = $data['url']; //在数据库里的url路径
+    }
+
+    return $info;
 }

@@ -22,7 +22,7 @@
       </div>
       <div id="videoMain" class="video-main">
         <video  id="example_video_1" class="video-js" preload="auto" poster="{$Details.img|get_cover='path'}" data-setup="{}">
-          <source src="__ROOT__{$Details['video']|get_file_field='path'}" type="{$Details['video']|get_file_field='mime'}" />
+          <source src="{$Details['video']|get_file_field='url'}" type="{$Details['video']|get_file_field='mime'}" />
         </video>
       </div>  
   </article>

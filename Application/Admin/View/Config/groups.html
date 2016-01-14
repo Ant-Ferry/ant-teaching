@@ -9,8 +9,14 @@
 		<volist name="Think.config.CONFIG_GROUP_LIST" id="group">
 
 			<li <eq name="id" value="$key">class="current"</eq>>
-				<eq name="key" value="2"><else/>
-				<a href="{:U('?id='.$key)}">{$group}配置</a></eq>
+				<switch name="key">
+					<case value="2"></case>
+					<case value="4"></case>
+					<case value="6"></case>
+					<default /><a href="{:U('?id='.$key)}">{$group}配置</a></eq>
+				</switch>
+				
+				
 			</li>
 
 		</volist>

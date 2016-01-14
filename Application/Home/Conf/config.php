@@ -26,8 +26,8 @@ return array(
     /* 文件上传相关配置 */
     'DOWNLOAD_UPLOAD' => array(
         'mimes'    => '', //允许上传的文件MiMe类型
-        'maxSize'  => 5*1024*1024, //上传的文件大小限制 (0-不做限制)
-        'exts'     => 'jpg,gif,png,jpeg,zip,rar,tar,gz,7z,doc,docx,txt,xml', //允许上传的文件后缀
+        'maxSize'  => 200*1024*1024, //上传的文件大小限制 (0-不做限制)
+        'exts'     => 'jpg,gif,png,jpeg,zip,rar,tar,gz,7z,doc,docx,txt,xml,mp4,f4v,flv', //允许上传的文件后缀
         'autoSub'  => true, //自动子目录保存文件
         'subName'  => array('date', 'Y-m-d'), //子目录创建方式，[0]-函数名，[1]-参数，多个参数使用数组
         'rootPath' => './Uploads/Download/', //保存根路径
@@ -38,6 +38,78 @@ return array(
         'hash'     => true, //是否生成hash编码
         'callback' => false, //检测文件是否存在回调函数，如果存在返回文件信息数组
     ), //下载模型上传配置（文件上传类配置）
+
+     'DOWNLOAD_UPLOAD_DRIVER'=>'qiniu',
+
+    /* 图片上传相关配置 */
+    'PICTURE_UPLOAD' => array(
+        'mimes'    => '', //允许上传的文件MiMe类型
+        'maxSize'  => 2*1024*1024, //上传的文件大小限制 (0-不做限制)
+        'exts'     => 'jpg,gif,png,jpeg', //允许上传的文件后缀
+        'autoSub'  => true, //自动子目录保存文件
+        'subName'  => array('date', 'Y-m-d'), //子目录创建方式，[0]-函数名，[1]-参数，多个参数使用数组
+        'rootPath' => './Uploads/Picture/', //保存根路径
+        'savePath' => '', //保存路径
+        'saveName' => array('uniqid', ''), //上传文件命名规则，[0]-函数名，[1]-参数，多个参数使用数组
+        'saveExt'  => '', //文件保存后缀，空则使用原后缀
+        'replace'  => false, //存在同名是否覆盖
+        'hash'     => true, //是否生成hash编码
+        'callback' => false, //检测文件是否存在回调函数，如果存在返回文件信息数组
+    ), //图片上传相关配置（文件上传类配置）
+
+    'PICTURE_UPLOAD_DRIVER'=>'local',
+
+    /* 头像上传相关配置 */
+    'AVATOR_UPLOAD' => array(
+        'mimes'    => '', //允许上传的文件MiMe类型
+        'maxSize'  => 2*1024*1024, //上传的文件大小限制 (0-不做限制)
+        'exts'     => 'jpg,gif,png,jpeg', //允许上传的文件后缀
+        'autoSub'  => true, //自动子目录保存文件
+        'subName'  => array('date', 'Y-m-d'), //子目录创建方式，[0]-函数名，[1]-参数，多个参数使用数组
+        'rootPath' => './Uploads/Avator/', //保存根路径
+        'savePath' => '', //保存路径
+        'saveName' => array('uniqid', ''), //上传文件命名规则，[0]-函数名，[1]-参数，多个参数使用数组
+        'saveExt'  => '', //文件保存后缀，空则使用原后缀
+        'replace'  => false, //存在同名是否覆盖
+        'hash'     => true, //是否生成hash编码
+        'callback' => false, //检测文件是否存在回调函数，如果存在返回文件信息数组
+    ), //图片上传相关配置（文件上传类配置）
+
+    'AVATOR_UPLOAD_DRIVER'=>'local',
+
+    /* 作业上传相关配置 */
+    'TASK_UPLOAD' => array(
+        'mimes'    => '', //允许上传的文件MiMe类型
+        'maxSize'  => 2*1024*1024, //上传的文件大小限制 (0-不做限制)
+        'exts'     => 'doc,rar,txt,zip', //允许上传的文件后缀
+        'autoSub'  => true, //自动子目录保存文件
+        'subName'  => array('date', 'Y-m-d'), //子目录创建方式，[0]-函数名，[1]-参数，多个参数使用数组
+        'rootPath' => './Uploads/Task/', //保存根路径
+        'savePath' => '', //保存路径
+        'saveName' => array('uniqid', ''), //上传文件命名规则，[0]-函数名，[1]-参数，多个参数使用数组
+        'saveExt'  => '', //文件保存后缀，空则使用原后缀
+        'replace'  => true, //存在同名是否覆盖
+        'hash'     => true, //是否生成hash编码
+        'callback' => false, //检测文件是否存在回调函数，如果存在返回文件信息数组
+    ), //图片上传相关配置（文件上传类配置）
+
+    'TASK_UPLOAD_DRIVER'=>'local',
+
+    //本地上传文件驱动配置
+    'UPLOAD_LOCAL_CONFIG'=>array(),
+    'UPLOAD_BCS_CONFIG'=>array(
+        'AccessKey'=>'',
+        'SecretKey'=>'',
+        'bucket'=>'',
+        'rename'=>false
+    ),
+    'UPLOAD_QINIU_CONFIG'=>array(
+        'accessKey'=>'obONUmKYN5b49A2jJnseSy5IrPp17EHcUsS1fgEy',
+        'secrectKey'=>'kEOTRa9MXP6nsARKmKYC6GyDF3Q2wqdc7mXSrT0T',
+        'bucket'=>'antferry007',
+        'domain'=>'7xobxt.com1.z0.glb.clouddn.com',
+        'timeout'=>3600,
+    ),
 
     /* 编辑器图片上传相关配置 */
     'EDITOR_UPLOAD' => array(
@@ -95,5 +167,6 @@ return array(
         'hash'     => true, //是否生成hash编码
         'callback' => false, //检测文件是否存在回调函数，如果存在返回文件信息数组
     ), //附件上传配置（文件上传类配置）
-   
+   'PCLZIP_TEMPORARY_DIR'=> './Uploads/TaskZip/',
+   'PCLZIP_TIME' => 3600 //zip文件存活时间
 );

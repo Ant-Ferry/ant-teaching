@@ -39,28 +39,62 @@
 					<div class="form-item">
 						<label class="item-label">
 							分组<span class="check-tips">
-							（分组：1-名师 2-经典 3-基本) 
+							（分组：1-名师讲堂 2-经典视频 3-普通视频 4-专题视频) 
 							</span>
 						</label>
 						<div class="controls">
+							<!--
 							<input type="text" name="group" class="text input-large" value="{$info.group|default='1'}">
+						-->
+							<select name="group" id="group"  class="input-large">
+			                    <option value="1" <eq name="info.group" value="1">selected</eq>>名师讲堂</option>
+			                    <option value="2" <eq name="info.group" value="2">selected</eq>>经典视频</option>
+			                    <option value="3" <eq name="info.group" value="3">selected</eq>>普通视频</option>
+			                    <option value="4" <eq name="info.group" value="4">selected</eq>>专题视频</option>
+			                </select>
 						</div>
 					</div>
 					<div class="form-item">
 						<label class="item-label">标签<span class="check-tips"></span></label>
 						<div class="controls">
-							<select name="tab" class="input-large">
-								<notempty name="set">
-									<foreach name="tabs" item="vo" key="k">
-										<option value="{$vo.id}" <eq name="info.tab" value="$vo.id">selected</eq>>{$vo.name}</option> 
-									</foreach>
+							<select name="tab" id ='tablist' class="input-large">
+								<notempty name="info.tab">
+									<eq name="info.group" value="1">
+										<foreach name="calloutTabs" item="vo" key="k">
+											<option value="{$vo.id}" <eq name="info.tab" value="$vo.id">selected</eq>>{$vo.name}</option> 
+										</foreach>
 									<else/>
-									<foreach name="tabs" item="vo" key="k">
-										<option value="{$vo.id}" <eq name="k" value="0">selected</eq>>{$vo.name}</option> 
-									</foreach>
+										<foreach name="tabs" item="vo" key="k">
+											<option value="{$vo.id}" <eq name="info.tab" value="$vo.id">selected</eq>>{$vo.name}</option> 
+										</foreach>
+									</eq>
+									<else/>
+									<eq name="info.group" value="1">
+										<foreach name="calloutTabs" item="vo" key="k">
+											<option value="{$vo.id}" <eq name="k" value="0">selected</eq>>{$vo.name}</option> 
+										</foreach>
+									<else/>
+										<foreach name="tabs" item="vo" key="k">
+											<option value="{$vo.id}" <eq name="k" value="0">selected</eq>>{$vo.name}</option> 
+										</foreach>
+									</eq>
 								</notempty>  
 								
 							</select>
+
+							<div class="hidden">
+								<div id="tabsList">
+									<foreach name="tabs" item="vo" key="k">
+										<option value="{$vo.id}" <eq name="k" value="0">selected</eq>>{$vo.name}</option> 
+									</foreach>
+								</div>
+								<div id="calloutList">
+									<foreach name="calloutTabs" item="vo" key="k">
+										<option value="{$vo.id}" <eq name="k" value="0">selected</eq>>{$vo.name}</option> 
+									</foreach>
+								</div>
+
+							</div>
 						</div>
 					</div>
 					<div class="controls">
@@ -81,7 +115,7 @@
 						<notempty name="info['video']">
 							<div class="upload-pre-video">
 								<video width="100%" height="100%" controls="controls">
-									<source src="__ROOT__{$info['video']|get_file_field='path'}" type="{$info['video']|get_file_field='mime'}" />
+									<source src="{$info['video']|get_file_field='url'}" type="{$info['video']|get_file_field='mime'}" />
 								</video>
 							</div>
 						</notempty>
@@ -90,17 +124,57 @@
 					<div class="form-item">
 						<label class="item-label">授课老师<span class="check-tips"></span></label>
 						<div class="controls">
-							<select name="authority" class="input-large">
+							<select name="authoritytype" id="authoritytype" class="input-large">
+								<notempty name="info['authoritytype']">
+									<option value="1" <eq name="info.authoritytype" value="1">selected <assign name="authoritytype" value="$taach" /></eq>>授课教师</option> 
+									<option value="2" <eq name="info.authoritytype" value="2">selected<assign name="authoritytype" value="$king" /></eq>>成功人士</option> 
+									<option value="3" <eq name="info.authoritytype" value="3">selected<assign name="authoritytype" value="$expert" /></eq>>领域专家</option> 
+								<else/>
+									<option value="1" selected>授课教师
+										<assign name="authoritytype" value="$taach" /></option>
+									<option value="2" >成功人士</option> 
+									<option value="3" >领域专家</option> 
+								</notempty>  
+							</select>
+							
+
+							<select name="authority" id="authority" class="input-large">
 								<notempty name="info['authority']">
-									<foreach name="taach" item="vo" key="k">
+									<foreach name="authoritytype" item="vo" key="k">
 										<option value="{$vo.id}" <eq name="info.authority" value="$vo.id">selected</eq>>编号：{$vo.id} {$vo.name}</option> 
 									</foreach>
 									<else/>
-									<foreach name="taach" item="vo" key="k">
+									<foreach name="authoritytype" item="vo" key="k">
 										<option value="{$vo.id}" <eq name="k" value="0">selected</eq>>编号：{$vo.id} {$vo.name}</option> 
 									</foreach>
 								</notempty>  
 							</select>
+						</div>
+						<!--提前填充教师资源-->
+						<div class="hidden">
+							<!--教师列表Statr-->
+							<div id="authority1">
+								<foreach name="taach" item="vo" key="k">
+									<option value="{$vo.id}" <eq name="k" value="0">selected</eq>>编号：{$vo.id} {$vo.name}</option> 
+								</foreach>
+							</div>
+							<!--教师列表End-->
+
+							<!--成功人士列表Statr-->
+							<div id="authority2">
+								<foreach name="king" item="vo" key="k">
+									<option value="{$vo.id}" <eq name="k" value="0">selected</eq>>编号：{$vo.id} {$vo.name}</option> 
+								</foreach>
+							</div>
+							<!--成功人士列表End-->
+
+							<!--专家列表Statr-->
+							<div id="authority3">
+								<foreach name="expert" item="vo" key="k">
+									<option value="{$vo.id}" <eq name="k" value="0">selected</eq>>编号：{$vo.id} {$vo.name}</option> 
+								</foreach>
+							</div>
+							<!--专家列表End-->
 						</div>
 					</div>
 					<div class="form-item">
@@ -152,7 +226,7 @@
 				        }
 				    }
 
-				   	//上传图片
+				   	//上传视频
 				    /* 初始化上传插件 */
 					$("#upload_file").uploadify({
 				        "height"          : 30,
@@ -175,7 +249,7 @@
 				        if(data.status){
 				        	//src = data.url || '__ROOT__' + data.path;
 				        	var dataObj=eval("("+data.data+")");
-				        	src = '__ROOT__' +dataObj.path;
+				        	src = dataObj.path;
 				        	//alert(src);
 				        	type = dataObj.mime;
 				        	$("#video").val(dataObj.id);
@@ -191,43 +265,6 @@
 				        }
 				    }
 					</script>
-				</div>
-
-				<!-- 高级 -->
-				<div id="tab2" class="tab-pane tab2">
-					<div class="form-item">
-						<label class="item-label">可见性<span class="check-tips">（是否对用户可见，针对前台）</span></label>
-						<div class="controls">
-							<select name="display">
-								<option value="1">所有人可见</option>
-								<option value="0">不可见</option>
-								<option value="2">管理员可见</option>
-							</select>
-						</div>
-					</div>
-					
-
-				</div>
-
-				<!-- 高级 -->
-				<div id="tab2" class="tab-pane tab2">
-					<div class="form-item">
-						<label class="item-label">标题</label>
-						<div class="controls">
-							<input type="text" name="link_id" class="text input-large" value="{$info.link_id|default=''}">
-						</div>
-					</div><div class="form-item">
-						<label class="item-label">描述</label>
-						<div class="controls">
-							<label class="textarea input-large">
-								<textarea name="description">{$info.description|default=''}</textarea>
-							</label>
-						</div>
-					</div>
-					
-					
-					
-					
 				</div>
 
 				<div class="form-item">
@@ -262,5 +299,33 @@
 		});
 		//导航高亮
 		highlight_subnav('{:U('Slide/index')}');
+	</script>
+	<script >
+	$(document).ready(function(){ 
+		$('#authoritytype').change(function(){ 
+		var p1=$(this).children('option:selected').val(); 
+		var htmlValue = $("#authority"+p1).html();
+		$("#authority").html(htmlValue);
+		//var p2=$('#param2').val();//获取本页面其他标签的值 
+		//window.location.href="xx.php?param1="+p1+"¶m2="+p2+"";//页面跳转并传参 
+		});
+
+		$('#group').change(function(){ 
+
+		var htmlValue ;
+		var p1=$(this).children('option:selected').val();
+
+		if(p1 == 1) {
+			htmlValue = $("#calloutList").html();
+		}else{
+			htmlValue = $("#tabsList").html();
+		}
+		
+		$("#tablist").html(htmlValue);
+		alert('由于调整了分组，请重新选择标签');
+		});
+
+
+	}); 
 	</script>
 </block>

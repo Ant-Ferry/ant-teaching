@@ -13,7 +13,7 @@ use Think\Model;
 class PersonnelDataModel extends Model {
 
     protected $_validate = array(
-        array('id', 'require', 'id不能为空','0','','2' ),
+        array('id', 'require','id不能为空','0','','2' ),
         array('id', 'number', 'id必须为数字','0','','2' ),
         array('type', 'require', 'type不能为空' ),
         array('type', 'number', 'type必须为数字' ),
@@ -60,14 +60,22 @@ class PersonnelDataModel extends Model {
      * @return [type]        [description]
      */
     public function selectTeachData($id, $order = array('id'=>'asc')){
-        $field = array('name', 'company','synopsis','portrait',);
+        $field = array('id','name', 'company','synopsis','portrait',);
         $returnData = $this->selectData(array('id' => $id),$order,$field);
 
         return $returnData;
     }
 
+    public function getGoodTeach( $order = array('id'=>'asc')){
+        $field = array('id','name', 'company','synopsis','portrait','famous'); 
+        $data = array('type' => 1 );
+
+        $returnData = $this->selectData($data, $order, $field);
+        return $returnData;
+    }
+
     public function getSuccessPeople( $order = array('id'=>'asc')){
-        $field = array('id','name', 'company','synopsis','portrait',); 
+        $field = array('id','name', 'company','synopsis','portrait','famous'); 
         $data = array('type' => 2 );
 
         $returnData = $this->selectData($data, $order, $field);
@@ -75,17 +83,20 @@ class PersonnelDataModel extends Model {
     }
 
     public function getFieldExpert( $order = array('id'=>'asc')){
-        $field = array('id','name', 'company','synopsis','portrait',); 
+        $field = array('id','name', 'company','synopsis','portrait','famous'); 
         $data = array('type' => 3 );
 
         $returnData = $this->selectData($data, $order, $field);
         return $returnData;
     }
 
-    public function getPersonnels($type = 1, $order = array('id'=>'asc')){
+    public function getPersonnels($type = 1, $order = array('id'=>'asc'),$status = 1){
         $field = array('id','name', 'company','synopsis','portrait',); 
-        $data['type'] = $type;
-
+        $data['status'] = $status;
+        if($type!=-1){
+           $data['type'] = $type; 
+        }
+        
         $returnData = $this->selectData($data, $order, $field);
         return $returnData;
     }
@@ -97,7 +108,7 @@ class PersonnelDataModel extends Model {
      */
     public function selectPersonnel($id){
         $data['id'] = $id;
-        $field = array('type','name', 'company','synopsis','portrait',);
+        $field = array('id','type','name', 'company','synopsis','portrait',);
         //$returnData = $this->selectData(array('id' => $id),$order,$field);
         $returnData = $this->where($data)->field($field)->find();
         return $returnData;

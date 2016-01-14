@@ -35,7 +35,7 @@ class NewsController extends HomeController {
         $Notice = $this->getNotice();
         $this->assign('notice',$Notice);
 
-        //
+        Cookie('__forward__',$_SERVER['REQUEST_URI']);
         $this->display();
     }
 

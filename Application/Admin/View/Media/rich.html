@@ -3,7 +3,7 @@
 <block name="body">
     <div class="main-title">
         <h2>资源管理 [ <present name="Think.get.group">
-         <a href="{:U('index')}">全部</a><else/><strong>新闻</strong></present>&nbsp;<foreach name="group" item="vo">
+         <a href="{:U('index')}">全部</a><else/><strong>图文</strong></present>&nbsp;<foreach name="group" item="vo">
         <neq name="group_id" value="$key">
          <a href="{:U('index?group='.$key)}">{$vo}</a><else/><strong>{$vo}</strong></neq>&nbsp;     
         </foreach> ]</h2>

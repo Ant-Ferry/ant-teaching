@@ -83,10 +83,11 @@
                         <td>{$order.video}</td>
                     -->
                         <td>
-                            <notempty name="taach">
-                                <foreach name="taach" item="vo" key="k">
+                            <notempty name="personnes">
+                                <foreach name="personnes" item="vo" key="k">
                                     <eq name="vo.id" value="$order.authority">{$vo.name}</eq>
                                 </foreach>
+                                
                             </notempty> 
                         </td>
                         <td>{$order.set}</td>

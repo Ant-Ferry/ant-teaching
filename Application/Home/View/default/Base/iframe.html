@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<include file="Public/head"/>
+</head>
+<body style="background: #FFFFFF;">
+	<!-- 主体 -->
+	<div id="main-container" class="">
+    	<block name="container"></block>
+	</div>
+	<!-- /主体 -->
+	<block name="script"></block> <!-- 用于加载js代码 -->
+<!-- 页面footer钩子，一般用于加载插件JS文件和JS代码 -->
+{:hook('pageFooter', 'widget')}
+</body>
+</html>

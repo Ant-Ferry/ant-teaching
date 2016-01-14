@@ -1,0 +1,54 @@
+<extend name="Public/base" />
+
+<block name="body">
+	<div class="main-title cf">
+		<h2><if condition="ACTION_NAME eq 'addaction'">新增<else/>编辑</if>教师</h2>
+	</div>
+	<!-- 表单 -->
+	<form id="form" action="{:U('')}" method="post" class="form-horizontal">
+		<notempty name="info">
+          <input type="hidden" name="id" value="{$info.id}">
+        </notempty>
+		<div class="form-item cf">
+			<label class="item-label">用户昵称<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" class="text input-large"  value="{$info.member_id|get_nickname}" disabled="true">
+			</div>
+		</div>
+		<div class="form-item cf">
+			<label class="item-label">绑定教师<span class="check-tips">（把当前用户与教师绑定到一起）</span></label>
+			<div class="controls">
+				<select name="tid">
+				  	<notempty name="info.tid">
+				  		<option value="">编号：  空值</option>
+						<foreach name="personnes" item="vo" key="k">
+							<option value="{$vo.id}" <eq name="info.tid" value="$vo.id">selected</eq>>编号：{$vo.id} {$vo.name}</option> 
+						</foreach>
+						<else/>
+						<option value="">编号：  空值</option>
+						<foreach name="personnes" item="vo" key="k">
+							<option value="{$vo.id}" >编号：{$vo.id} {$vo.name}</option> 
+						</foreach>
+					</notempty>
+				  
+				</select>
+			</div>
+		</div>
+	
+
+		<div class="form-item">
+			
+			<button type="submit" class="btn submit-btn ajax-post" target-form="form-horizontal">确 定</button>
+			<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+		</div>
+	</form>
+</block>
+
+<block name="script">
+<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+	Think.setValue('type',{$data.type|default=1});
+    //导航高亮
+    highlight_subnav('{:U('User/teach')}');
+</script>
+</block>

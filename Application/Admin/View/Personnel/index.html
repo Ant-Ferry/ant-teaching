@@ -53,15 +53,18 @@
 						<td>{$order.id}</td><td><a title="编辑" href="{:U('edit?id='.$order['id'].'&pid='.$pid)}">{$order.name}</a></td>
                         <td>
                             <switch name="order.type">
-                                <case value="1">教师</case>
-                                <case value="2">成功人士</case>
-                                <case value="3">领域专家</case>
+                                <case value="1">教师
+                                    <eq name="order.famous" value="1"><b style="    color: #0384C3;"> (名师)</b></eq></case>
+                                <case value="2">成功人士
+                                    <eq name="order.famous" value="1"><b style="    color: #0384C3;"> </b></eq></case>
+                                <case value="3">领域专家
+                                    <eq name="order.famous" value="1"><b style="    color: #0384C3;"> (知名)</b></eq></case>
                                 <default />其他
                             </switch>
                         </td>
                         
                         <td>{$order.company}</td>
-                        <td><img src="{$order.portrait|get_cover='path'}"  width="50" height="50"/> 
+                        <td><img src="{$order.portrait|get_avator='path'}"  width="40" height="40"/> 
                             <!--
                             <a title="编辑" href="{$order.portrait|get_cover='path'}" target='_blank'>查看大图</a>
                         -->

@@ -26,7 +26,9 @@
                 <div class="browser">
           <div class="browser-side">
             <div class="browser-img">
-            <img src="{$community.0.img|get_cover='path'}"></img>
+            <a href="{:U('Show/index?type=3&id='.$community[0]['id'])}">
+              <img src="{$community.0.img|get_cover='path'}"></img>
+            </a>
             </div>
             <div class="side-text">
             <!--title-->
@@ -40,7 +42,7 @@
           <div class="browser-content">
             <!-- Cx标签 statr-->
             <foreach name="community" item="vo" key="k" >
-            <img src="{$vo.img|get_cover='path'}" alt="" data-assn-title="{$vo.title}" data-assn-content="{$vo.synopsis}">
+            <img src="{$vo.img|get_cover='path'}" alt="" data-assn-title="{$vo.title}" data-assn-content="{$vo.synopsis}" data-assn-href="{:U('Show/index?type=3&id='.$vo['id'])}">
             </foreach>
             <!-- Cx标签 end-->
           </div>
@@ -73,7 +75,7 @@
             <!-- tab-div{$k} Stater -->
                   <div class=<eq name="k" value="0">"tab-pane fade in active"<else/>"tab-pane fade"</eq> id="tab-div{$k}">
                     <article id="book-news" class="media">
-                       <a class="pull-left" href="{$vo.id}">
+                       <a class="pull-left" href="{:U('Show/index?type=3&id='.$vo['id'])}">
                           <img class="media-object" src="{$vo.img|get_cover='path'}" 
                           alt="媒体对象">
                        </a>
@@ -89,7 +91,7 @@
            </div>
         </article>
         <article class="col-md-3 book-news-tab"  >
-          <ul id="myTab" class="nav nav-tabs">
+          <ul id="myTab" class="nav nav-tabs" style="font-weight: 600;">
             <!-- Cx标签 statr-->
             <foreach name="reading" item="vo" key="k" >
               <li class=<eq name="k" value="0">"active"</eq>>
@@ -156,14 +158,6 @@
   </script>
   
    <script>
-    // 载入数据
-  $(document).ready(function(){
-  //载入特色社团
-  /*
-  var imgs = $(".browser-content").children("img").eq(0);
-  contentAnalysisST(imgs); 
-  */
-  });
 
   //特色社团载入事件
   $(".browser-content").children("img").click(function(){
@@ -177,9 +171,11 @@
     var title = dateObject.attr("data-assn-title");
     var content = dateObject.attr("data-assn-content");
     var imgurl = dateObject.attr("src");
+    var href = dateObject.attr('data-assn-href')
     $(".side-text").children("h6").text(title );
     $(".side-text").children("p").text(content);
     $(".browser-img").children("img").attr("src",imgurl);
+    $(".browser-img").children("a").attr("href",href);
   }
 
   /**/

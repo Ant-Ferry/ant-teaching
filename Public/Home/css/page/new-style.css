@@ -10,7 +10,8 @@
   .indexList {-webkit-margin-end: 10px; -webkit-padding-start: 5px;}
   .indexList li {list-style:none;  padding: 20px 0;border-top: 1px #dadada solid;}
   .indexSub {border-top: 1px #dadada solid;margin-bottom: 20px;}
-  .indexSub .indexTitle {margin-top: 15px; margin-bottom: 15px; padding-bottom: 5px; background-position: 10px center; border-bottom: 1px #000 dashed; }
+  .indexSub .indexTitle {margin-top: 20px; margin-bottom: 5px; padding-bottom: 10px; background-position: 10px center; border-bottom: 1px #999999 dashed; }
+  .indexSub h6 {font-size: 18px;}
   .tc {text-align: center;}
   a.more { display: inline-block; margin: 10px auto; width: 160px; height: 30px; line-height: 30px; background: #266da3; color: #fff;text-align: center;font-size: 16px;}
 
@@ -86,38 +87,44 @@ background: rgba(0,0,0,.6);
 .badge {font-size: 14px;line-height: 14px;}
 ul { -webkit-margin-end: 10px; -webkit-padding-start: 5px;}
 ul { list-style: square inside url('../../images/page/public/dian1.gif')}
-.indexMedia {list-style: square inside url('../../images/page/news/icon_pop.png') }
-.indexMedia li {font-size: 14px; padding: 5px; margin-bottom: 5px; border-bottom: 1px #e2e2e2 dashed; max-height: 54px; overflow:hidden;}
-.indexMedia .active{ background-color: #F7F7F7; color: #3498DB;}
-.indexMedia .active a{ color:#3498DB; width:100%;}
+
 
 .media-number>.media-left, .media-number>.media-body {display: -webkit-inline-box; vertical-align: top; }
 
 /*此页添加的内容*/ 
 .contentTitle {
-padding: 10px 20px 10px 20px;
+padding: 10px 20px 6px 20px;
 font-size: 20px;
 font-weight: bold;
 text-align: center;
 color: #A08359; 
-font-family: Microsoft YaHei, SimSun;
-border-bottom: 1px #dadada dashed;
+font-family: inherit;
+border-bottom: 1px #999999 dashed;
 }
 
 .contentTime {
+  display: block;
   text-align: center;
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 5px;
+  margin-bottom: 10px;
   color: #868686;
-  font-size: 16px;
+  font-size: 14px;
 }
-.fck {
-padding: 5px 14px 100px 14px;
-line-height: 24px;
-text-align: justify;
-}
+
 .row {
     margin-right: 0px;
     margin-left: 0px;
 }
-#indexMain{   background-color: #FFF;}
+
+/**/
+.MarginRight-10 {margin-right: -10px;}
+.MarginLeft-10 {margin-left: -10px;}
+
+/**/
+.carousel-indicators {
+    left: 90%;
+    z-index: 15;
+    width: 20%;
+    min-width: 160px;
+    margin-left: -38%;
+}

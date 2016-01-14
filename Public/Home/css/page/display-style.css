@@ -1,12 +1,20 @@
  /*定义第一横区的设置，作品展示介绍*/
+	.presentation-block-div a{
+		display:block;
+		color: #FFF;
+		font-size: 24px;
+		text-align: center;  
+		line-height: 140px;
+	}
+
 	.presentation-title-div {
-	  height: 320px;
+	  height: 290px;
 	  background-color: #95A5A6;
 	  margin-right: -10px;
 	}
 	.presentation-block-div {
 	 width:100%;
-	 height:155px;
+	 height:140px;
 	 background-color:#95A5A6;
 	}
 	.presentation-block-div:first-child { 
@@ -31,7 +39,8 @@
 	  color: #FFFFFF;
 	  padding: 20px;
 	  margin-bottom: 0px;
-	  max-height: 320px;
+	  max-height: 290px;
+	  min-height: 286px;
 	}
 	.block-1 {
 	  padding: 20px 30px 20px 40px;

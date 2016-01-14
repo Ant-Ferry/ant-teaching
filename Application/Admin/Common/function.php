@@ -441,12 +441,14 @@ function get_action_type($type, $all = false){
     return $list[$type];
 }
 
+//////////////////////////////////////暂时去掉这段代码
 /**
  * [get_file_field 获得文件信息]
  * @param  [type] $value [id值]
- * @param  [type] $field [查询字段值：path,mime,]
+ * @param  [type] $field [查询字段值：path,mime,url]
  * @return [type]        [结果]
  */
+/*
 function get_file_field($value = null, $field = null){
     if(empty($value)){
         return false;
@@ -455,17 +457,23 @@ function get_file_field($value = null, $field = null){
     //拼接参数
     $map['id'] = $value;
     $info = M('File')->where($map);
-    if($field != 'path'){
+    if($field == 'mime'){
         if(empty($field)){
             $info = $info->field(true)->find();
         }else{
             $info = $info->getField($field);
         }
-    } else {
+
+    } else if($field == 'path') {
        $setting = C('DOWNLOAD_UPLOAD');
        $data = $info->field(true)->find();
        $info = substr($setting['rootPath'], 1).$data['savepath'].$data['savename']; //在模板里的url路径
+    } else if($field == 'url'){
+       $data = $info->field(true)->find();
+       $info = $data['url']; //在数据库里的url路径
     }
 
     return $info;
 }
+*/
+///////////////////////////////////////////////////////////////////

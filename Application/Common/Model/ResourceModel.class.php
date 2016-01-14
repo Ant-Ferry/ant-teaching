@@ -18,7 +18,7 @@ class ResourceModel extends Model {
         array('type', 'require', 'type不能为空' ),
         array('type', array(0,1,2), 'type值不在范围内',2,'in' ),
         array('group', 'require', 'group不能为空' ),
-        array('group', array(0,1,2), 'group值不在范围内',2,'in' ),
+        array('group', array(1,2,3,4), 'group值不在范围内',2,'in' ),
         array('tab', 'require', 'group不能为空' ),
         array('tab', 'number', 'tab值为数字'),
         array('img', 'require', 'img不能为空' ),

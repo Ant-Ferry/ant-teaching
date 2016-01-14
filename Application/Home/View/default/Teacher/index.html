@@ -2,6 +2,7 @@
 
 <block name="style">
 	<link href="__CSS__/page/teacher-style.css" rel="stylesheet">
+
 </block>
 
 <block name="container">
@@ -11,29 +12,40 @@
       <div class="col-md-12">
         <div class="media ">
            <a class="pull-left" href="#">
-              <img class="media-object avatar" src="{$personnel.portrait|get_cover='path'}" 
+              <img class="media-object avatar" src="{$personnel.portrait|get_avator='path'}" 
               alt="头像">
            </a>
            <div class="media-body teacher-type">
-                <h4>{$personnel.name}
-                  <small>{$personnel.company}</small></h4>
-                <div >
-                  <b style="font-size:20px;color: #34495e;">
+                <h6 style="color: #34495e;">{$personnel.name}
+                  <small > &nbsp;&nbsp;职称:                 
                   <switch name="personnel.type">
                     <case value="1">任课老师</case>
                     <case value="2">成功人士</case>
                     <case value="3">领域专家</case>
                     <default />其他
                   </switch>
-                  </b>
+
+                  </small>
+                  <small >&nbsp;&nbsp;&nbsp;&nbsp;曾任职于: {$personnel.company}</small>
+                  <eq name="personnel.type" value="1">
+                    <notempty name="teachInfo">
+                      <a href="{:U('Home/User/letterEdit',array('id'=>$teachInfo['member_id']))}" class="pull-right"><span class="badge-info">私信</span></a>
+                    </notempty>
+                  </eq>
+                  
+                </h6>
+
+                <div >
+                  
                 </div>
                 
                 <div class="about">
-                  <b >
+                  <p style="font-size:16px;">
                     {$personnel.synopsis}
-                  </b>
+                  </p>
                 </div>
                 <div class="links"></div>
+
            </div>
         </div>
       </div>
@@ -44,7 +56,24 @@
       <div class="row white-background">
         <div class="col-md-12">
           <ul id="myTab" class="nav nav-tabs">
-            <li class="active"><a href="#home" data-toggle="tab">录制的视频</a></li>
+            <li class="active"><a href="#home" data-toggle="tab">
+              <switch name="personnel.type">
+                <case value="1">发布的视频</case>
+                <case value="2">相关的视频</case>
+                <case value="3">相关的视频</case>
+                <default />其他
+              </switch>
+            </a></li>
+
+            <li class="">
+              <switch name="personnel.type">
+                <case value="1">
+                  <a href="{:U('/Home/Teacher/testlist',array('id'=>$personnel['id']))}" data-toggle="tab" data-url-range="external">布置的作业</a>
+                </case>
+                
+              </switch>
+            </li>
+
           </ul>
           
           <div id="myTabContent" class="tab-content">
@@ -82,6 +111,17 @@
     });
      $(".activity-item").mouseout(function(){
         $(this).removeClass("activity-shadow");
+    });
+
+    $('#myTab a').click(function(e) {
+        var range = $(this).attr("data-url-range");
+        if(range == "external"){
+          location.href = $(this).attr("href");
+        }
+        else{
+          $(this).tab('show');
+        }
+        
     });
     </script>
 </block>

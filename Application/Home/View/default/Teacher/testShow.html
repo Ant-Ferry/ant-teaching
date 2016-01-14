@@ -1,0 +1,136 @@
+<extend name="Base/common"/>
+
+<block name="style">
+	<link href="__CSS__/page/teacher-style.css" rel="stylesheet">
+  
+</block>
+
+<block name="container">
+  <div class="userpage-header">
+    <!--横快一 Stater-->
+    <div class="row white-background">
+      <div class="col-md-12">
+        <div class="media ">
+           <a class="pull-left" href="#">
+              <img class="media-object avatar" src="{$personnel.portrait|get_avator='path'}" 
+              alt="头像">
+           </a>
+           <div class="media-body teacher-type">
+                <h6 style="color: #34495e;">{$personnel.name}
+                  <small > &nbsp;&nbsp;职称:                 
+                  <switch name="personnel.type">
+                    <case value="1">任课老师</case>
+                    <case value="2">成功人士</case>
+                    <case value="3">领域专家</case>
+                    <default />其他
+                  </switch>
+
+                  </small>
+                  <small >&nbsp;&nbsp;&nbsp;&nbsp;曾任职于: {$personnel.company}</small>
+                  <eq name="personnel.type" value="1">
+                    <notempty name="teachInfo">
+                      <a href="{:U('Home/User/letterEdit',array('id'=>$teachInfo['member_id']))}" class="pull-right"><span class="badge-info">私信</span></a>
+                    </notempty>
+                  </eq>
+                  
+                </h6>
+
+                <div >
+                  
+                </div>
+                
+                <div class="about">
+                  <p style="font-size:16px;">
+                    {$personnel.synopsis}
+                  </p>
+                </div>
+                <div class="links"></div>
+
+           </div>
+        </div>
+      </div>
+      </div>
+      <!--横快一 End-->
+    
+      <!--横快二 Stater-->
+      <div class="row white-background">
+        <div class="col-md-12">
+          <ul id="myTab" class="nav nav-tabs">
+            <li class=""><a href="{:U('/Home/Teacher/index',array('id'=>$personnel['id']))}" data-toggle="tab" data-url-range="external">
+              <switch name="personnel.type">
+                <case value="1">发布的视频</case>
+                <case value="2">相关的视频</case>
+                <case value="3">相关的视频</case>
+                <default />其他
+              </switch>
+            </a></li>
+            <li class="">
+              <switch name="personnel.type">
+                <case value="1">
+                  <a href=" {:U('/Home/Teacher/testlist',array('id'=>$personnel['id']))}" data-toggle="tab" >布置的作业</a>
+                </case>
+                
+              </switch>
+            </li>
+
+            <li class="active">
+              <switch name="personnel.type">
+                <case value="1">
+                  <a href="#home" data-toggle="tab" >作业详情</a>
+                </case>
+                
+              </switch>
+            </li>
+          </ul>
+          
+          <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade in active" id="home">
+              <section class="row demo-row" style="padding: 10px">
+                <ol class="breadcrumb">
+                    <li><a href=" {:U('/Home/Teacher/testlist',array('id'=>$personnel['id']))}">返回</a></li>
+                    <li class="active" ><a >作业详情</a></li>
+                  </ol>
+                <article  class="MarginLeft-10 indexMain" >
+                  <div class="contentTitle">          
+                    <b >{$info.title}</b>
+                  </div> 
+                  <!-- 内容 statr-->
+                  <section class="fck">
+                    <!-- Cx标签 statr-->
+                    {$info.content}
+                    <!-- Cx标签 end  -->
+                  </section>
+                  <!-- 内容 end-->
+                </article>
+
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--横快二 End-->
+    </div>
+
+</block>
+<block name="script">
+    <script>
+    $(".activity-item").mouseover(function(){
+        $(this).addClass("activity-shadow");
+    });
+     $(".activity-item").mouseout(function(){
+        $(this).removeClass("activity-shadow");
+    });
+
+      $('#myTab a').click(function(e) {
+        var range = $(this).attr("data-url-range");
+        if(range == "external"){
+          location.href = $(this).attr("href");
+        }
+        else{
+          $(this).tab('show');
+        }
+        
+    });
+    </script>
+</block>
+  

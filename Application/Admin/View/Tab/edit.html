@@ -30,13 +30,19 @@
 							</span>
 						</label>
 						<div class="controls">
-							<input type="text" name="type" class="text input-large" value="{$info.type|default='1'}">
+							<input type="text" name="type" readOnly="true"  class="text input-large" value="{$info.type|default='1'}">
 						</div>
 					</div>
 					<div class="form-item">
-						<label class="item-label">标注<span class="check-tips">（标注：0-未标注  1-已标注  , 标注的标签决定 名师讲堂页 显示的标签) </span></label>
+						<label class="item-label">是否标注<span class="check-tips">（已标注标签能够在 名师讲堂页 显示) </span></label>
 						<div class="controls">
+							<!--
 							<input type="text" name="features" class="text input-large" value="{$info.features|default='0'}">
+						-->
+							<select name="features" id="features"  class="input-large">
+			                    <option value="0" <eq name="info.features" value="0">selected</eq>>否</option>
+			                    <option value="1" <eq name="info.features" value="1">selected</eq>>是</option>
+			                </select>
 						</div>
 					</div>
 					<script type="text/javascript">

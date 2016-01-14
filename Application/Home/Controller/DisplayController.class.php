@@ -19,20 +19,22 @@ class DisplayController extends HomeController {
 
 		$introduction = $this->getIntroduction();
 		$this->assign('introduction',$introduction);
-
+		/*
 		$displayWork = $this->getDisplayWork();
 		$this->assign('displayWork',$displayWork);
+		*/
+		$map = array();
+		$map['status'] = 1;
+        $map['type'] = 3;
+        $map['group'] = 4;
+        $list = $this->lists('MediaData', $map,'id',true,6);
+		//$this->assign('list', $list);
+		$this->assign('displayWork',$list);
+
+		Cookie('__forward__',$_SERVER['REQUEST_URI']);
     	$this->display();
     }
 
-   	public function setBanners(){
-    	
-	   	$data[] = array ("img"=>"/carousel/slider1.jpg","title"=>"图片1","url"=>"http://baidu.com" );
-	    $data[] = array ("img"=>"/carousel/slider2.jpg","title"=>"图片2","url"=>"http://baidu.com" );
-	    $data[] = array ("img"=>"/carousel/slider3.jpg","title"=>"图片3","url"=>"http://baidu.com" );
-
-	   	$this->setBanner($this->PageFeature['ControllerName'], $data);
-    }	
 	protected function getIntroduction(){
 		$introduction = array("title"=>C('DISPLAY_TITLE') ,"titleSmall"=>C('DISPLAY_TITLE_SMALL'),"content"=>C('DISPLAY_CONTENT'),"link"=>C('DISPLAY_LINK') );
 		return $introduction;

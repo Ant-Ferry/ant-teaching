@@ -105,6 +105,7 @@
                 }
                 query = form.find('input,select,textarea').serialize();
             }
+            
             $(that).addClass('disabled').attr('autocomplete','off').prop('disabled',true);
             $.post(target,query).success(function(data){
                 if (data.status==1) {
@@ -167,7 +168,7 @@
             top_alert.removeClass('alert-error alert-warn alert-info alert-success').addClass(c);
 		}
 	};
-
+   
     //按钮组
     (function(){
         //按钮组(鼠标悬浮显示)

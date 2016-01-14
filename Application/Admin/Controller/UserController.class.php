@@ -33,7 +33,66 @@ class UserController extends AdminController {
         int_to_string($list);
         $this->assign('_list', $list);
         $this->meta_title = '用户信息';
+        // 记录当前列表页的cookie
+        Cookie('__forward__',$_SERVER['REQUEST_URI']);
         $this->display();
+    }
+
+    public function teach(){
+        $nickname       =   I('nickname');
+        $map['status']  =   array('egt',0);
+        if(is_numeric($nickname)){
+            $map['uid|nickname']=   array(intval($nickname),array('like','%'.$nickname.'%'),'_multi'=>true);
+        }else{
+            $map['nickname']    =   array('like', '%'.(string)$nickname.'%');
+        }
+
+        $list   = $this->lists('UcenterEdu', $map);
+        int_to_string($list);
+        $this->assign('_list', $list);
+        $this->meta_title = '教师信息';
+        $this->display();
+    }
+
+    public function teachEdit(){
+
+        if(IS_POST){
+            $DataModel= D('UcenterEdu');
+            $data = $DataModel->create();
+            if($data){
+                if($DataModel->save($data)){
+                    S('DB_TAB_DATA',null);
+                    $this->success('更新成功', U('User/teach'));
+                } else {
+                    $this->error('更新失败');
+                }
+            } else {
+                $this->error($DataModel->getError());
+            }
+        } else {
+            $id = array_unique((array)I('id',0));
+            $id = is_array($id) ? implode(',',$id) : $id;
+            if ( empty($id) ) {
+                $this->error('请选择要操作的数据!');
+            }
+            $map['id'] =   array('in',$id);
+           
+
+            //获得当前教员信息
+            $info = D('UcenterEdu')->where($map)->find();
+            if(!isset($info)){
+                $this->error('404! 文件不存在');
+            }
+
+             //获得所有教师
+            $personnes = $this->getPersonnelName(1,$info['tid']);
+            $this -> assign('personnes', $personnes);
+            $this->assign('info',$info);    
+            $this->meta_title = '教师信息';
+            $this->display();
+        }
+
+        
     }
 
     /**
@@ -200,6 +259,40 @@ class UserController extends AdminController {
         }
     }
 
+
+    /**
+     * [changeStatusEdu 修改状态教学组]
+     * @param  [type] $method [description]
+     * @return [type]         [description]
+     */
+    public function changeStatusEdu($method=null){
+        $id = array_unique((array)I('id',0));
+        $id = is_array($id) ? implode(',',$id) : $id;
+        if ( empty($id) ) {
+            $this->error('请选择要操作的数据!');
+        }
+        $map['id'] =   array('in',$id);
+        switch ( strtolower($method) ){
+            case 'forbiduser':
+                $this->forbid('UcenterEdu', $map );
+                break;
+            case 'resumeuser':
+                $this->resume('UcenterEdu', $map );
+                break;
+            case 'deleteuser':
+                $info = D('UcenterEdu')->where(array('id' => $id ))->delete();
+                if($info==0){
+                    $this->error('删除失败!');
+                }else{
+                    $this->success('成功删除！',U('User/teach'));
+                }
+                break;
+            default:
+                $this->error('参数非法');
+        }
+    }
+
+
     public function add($username = '', $password = '', $repassword = '', $email = ''){
         if(IS_POST){
             /* 检测密码 */
@@ -226,6 +319,38 @@ class UserController extends AdminController {
         }
     }
 
+    public function authorize($method=null){
+        $id = array_unique((array)I('id',0));
+        $id = is_array($id) ? implode(',',$id) : $id;
+        if ( empty($id) ) {
+            $this->error('请选择要操作的数据!');
+        }
+        $map['member_id'] = $id;
+        switch ( strtolower($method) ){
+            case 'byteach':
+                //$this->forbid('UcenterEdu', $map );
+                $map = D('UcenterEdu')->create($map,1);
+                $info = D('UcenterEdu')->add($map);
+                if($info==0){
+                    $this->error('授权失败!');
+                }
+                else{
+                   $this->success('操作成功！',Cookie('__forward__')); 
+                }
+                break;
+            case 'nobyteach':
+                $info = D('UcenterEdu')->where($map)->delete();
+                if($info==0){
+                    $this->error('取消授权失败!');
+                }else{
+                    $this->success('操作成功！',Cookie('__forward__'));
+                }
+                break;
+            default:
+                $this->error('参数非法');
+        }
+    }
+
     /**
      * 获取用户注册错误信息
      * @param  integer $code 错误编码
@@ -247,6 +372,24 @@ class UserController extends AdminController {
             default:  $error = '未知错误';
         }
         return $error;
+    }
+
+    /**
+     * [getPersonnelName 获得教师名字]
+     * @return [type] [description]
+     */
+    protected function getPersonnelName($type=1,$tid){
+        $list = D('PersonnelData')->getPersonnels($type);
+
+        $listEdu = D('UcenterEdu')->where(array('status' => 1))->getField('tid',true);;
+        
+        $returnData = array();
+       foreach ($list as $key => $value) {
+            if(!in_array($value['id'], $listEdu)||$value['id']==$tid){
+                $returnData[$value['id']] = $value;
+            }
+       }
+       return $returnData;
     }
 
 }

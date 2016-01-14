@@ -1,0 +1,298 @@
+<extend name="Base/common" />
+
+<block name="style">
+  <link href="__CSS__/page/user-style.css" rel="stylesheet">
+  <link href="__CSS__/page/teacher-style.css" rel="stylesheet">
+  <link href="__CSS__/module.css" rel="stylesheet">
+  <link href="__CSS__/common.css" rel="stylesheet">
+</block>
+
+<block name="header">
+</block>
+
+<block name="container">
+
+   <present name="userinfo">
+    <assign name="personnel" value="$userinfo" />
+    <present name="teach">
+      <assign name="personnel.type" value="1" />
+    </present>
+    <!--载入个人简介 Stater-->
+    <include file="Public/personal-details" />
+    <!--载入个人简介 End-->
+  </present>
+  
+  <!--模块二 Stater-->
+    <div class="row">
+      <div class="col-md-2 ">
+        <article  class="indexMain" >
+          <!--载入个人简介导航列表 Stater-->
+          <include file="Public/personal-list-nav" />
+          <!--载入个人简介导航列表 End-->
+        </article>
+      </div>
+      <div class="col-md-10">
+        <article  class="indexMain" >
+          <ul id="myTab" class="nav nav-tabs">
+            <notempty name="teach">
+              <li class="active"><a href="#reset-password" data-toggle="tab">修改密码</a></li>
+             <else/>
+              <li class="active"><a href="#task_edit" data-toggle="tab">提交作业列表</a></li>
+            </notempty>
+          </ul>
+          <div id="myTabContent" class="tab-content">
+            <notempty name="teach">
+                <section class="tab-pane fade in active" id="reset-password">
+                  <ol class="breadcrumb">
+                    <li><a href="{:U('Home/User/taskDetails')}">返回</a></li>
+                    <li class="active" ><a >布置作业</a></li>
+                  </ol>
+                  <article>
+                    <form id="profile" action="{:U()}" method="POST" class="form-horizontal">
+                      <notempty name="info.id">
+                        <input type="hidden" name="id" value="{$info.id}">
+                      </notempty>
+                      <empty name="info.tid">
+                        <input type="hidden" name="tid" value="{$teachValue.tid}">
+                      </empty>
+                      <div class="wlfg-wrap">
+                        <label class="label-name" for="task_title">作业标题</label>
+                        <div class="rlf-group">
+                            <input type="text" name="title" id="task_title" autocomplete="off" data-validate="nick" class="rlf-input  rlf-input-exit" value="{$info.title}">
+                            <p class="rlf-tip-wrap"></p>
+                        </div>
+                      </div>
+                      
+                      <div class="wlfg-wrap">
+                        <label class="label-name">作业内容</label>
+                        <div class="rlf-group controls">
+                          <label class="input-large" style="width:90%;">
+                          <textarea name="content">{$info.content}</textarea></label>
+                          <div class="container-span">{:hook('adminArticleEdit',array('name'=>'content'))}</div>
+                        </div>
+                      </div>
+                      
+                      <div class="wlfg-wrap">
+                        <div class="rlf-group">
+                          <button type="submit" id="submit" class="rlf-btn-green btn-block profile-btn ajax-post" target-form="form-horizontal">保 存</button>
+                        </div>
+                      </div>
+
+                    </form>
+                  </article>
+
+                </section>
+              <else/>
+                <section class="tab-pane fade in active" id="task_edit">
+                  <ol class="breadcrumb">
+                    <li><a href="{:U('Home/User/taskDetails')}">返回</a></li>
+                    <li class="active" ><a >作业编辑</a></li>
+                  </ol>
+                  <article>
+                    <form id="profile" action="{:U()}" method="POST" class="form-horizontal">
+                      <notempty name="info.id">
+                        <input type="hidden" name="id" value="{$info.id}">
+                      </notempty>
+                      <!--用户id-->
+                      <notempty name="info.id">
+                        <input type="hidden" name="uid" value="{$info.uid}">
+                      <else/>
+                        <input type="hidden" name="uid" value="{$userinfo.uid}">
+                      </notempty>
+          
+                      <div class="wlfg-wrap">
+                          <label class="label-name" for="videio_tab">选择老师</label>
+                          <div class="rlf-group">
+                               <select class="rlf-input " id="teach_list" style="width: 160px;">
+                                <option value="0" ></option> 
+                                <notempty name="info.teach">
+                                  <foreach name="personnes" item="vo" key="k">
+                                    <option value="{$vo.id}" <eq name="info.teach" value="$vo.id">selected</eq>>
+                                      <between name="vo.id" value="1,9">
+                                      00{$vo.id}-
+                                      </between>
+                                      <between name="vo.id" value="10,99">
+                                      0{$vo.id}-
+                                      </between>
+                                      <between name="vo.id" value="100,999">
+                                      {$vo.id}-
+                                      </between>
+                                      {$vo.name}</option> 
+                                  </foreach>
+                                  <else/>
+                                  <foreach name="personnes" item="vo" key="k">
+                                    <option value="{$vo.id}" <eq name="k" value="0">selected</eq>>
+                                      <between name="vo.id" value="1,9">
+                                      00{$vo.id}-
+                                      </between>
+                                      <between name="vo.id" value="10,99">
+                                      0{$vo.id}-
+                                      </between>
+                                      <between name="vo.id" value="100,999">
+                                      {$vo.id}-
+                                      </between>
+                                      {$vo.name}</option> 
+                                  </foreach>
+                                </notempty>  
+                                 
+                              </select>&nbsp;&nbsp;
+                              选择作业
+                              <select name="task_id" class="rlf-input " id="task_list" >
+                                <notempty name="info.task_id">
+                                  <foreach name="tasklist" item="vo" key="k">
+                                    <option value="{$vo.id}" <eq name="info.task_id" value="$vo.id">selected</eq>>{$vo.title}</option> 
+                                  </foreach>
+                                  <else/>
+                                  <foreach name="tasklist" item="vo" key="k">
+                                    <option value="{$vo.id}" <eq name="k" value="0">selected</eq>>{$vo.title}</option> 
+                                  </foreach>
+                                </notempty>  
+                                
+                              </select>
+                              <p class="rlf-tip-wrap"></p>
+                          </div>
+                      </div>
+
+                      <div class="wlfg-wrap">
+                        <label class="label-name" for="user_name">上传人姓名</label>
+                        <div class="rlf-group">
+                            <input type="text" name="user_name" id="user_name" autocomplete="off" data-validate="nick" class="rlf-input  rlf-input-exit" value="{$info.user_name}">
+                            <p class="rlf-tip-wrap"></p>
+                        </div>
+                      </div>
+
+                      <div class="wlfg-wrap">
+                        <label class="label-name" for="upload_file">作业</label>
+                        <div class="rlf-group">
+                          <input type="file" id="upload_file">
+                          <input type="hidden" name="file_id" id="file_id" value="{$info['file_id']}"/>
+                            <div class="upload-img-box" id="upfile_detail">
+                              <notempty name="info.file_id">
+                                <div class="uploadify-queue-item" style="position: relative;">         
+                                  <span class="fileName">{$info.file_id|get_task='name'} ({$info.file_id|get_task='size'} b )</span>         
+                                  <div class="uploadify-progress">            
+                                    <div class="uploadify-progress-bar" style="width: 100%;"><!--Progress Bar--></div>          
+                                  </div>        
+                                </div>
+                              </notempty>    
+                            </div>
+                          <p class="rlf-tip-wrap"></p>
+                        </div>
+             
+                      </div>
+
+                      <div class="wlfg-wrap">
+                        <div class="rlf-group">
+                          <button type="submit" id="submit" class="rlf-btn-green btn-block profile-btn ajax-post" target-form="form-horizontal">保 存</button>
+                        </div>
+                      </div>
+
+                  </form>
+                  </article>
+                </section>
+            </notempty>
+             
+          </div>
+        </div>
+      </article>
+    </div>
+    <!--模块二 End-->
+</block>
+
+<block name="side"> </block>
+<block name="script">
+  <script type="text/javascript" src="__JS__/common.js"></script>
+  <script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	<script type="text/javascript">
+    $(document).ready(function(){ 
+      $('#teach_list').change(function(){ 
+      //alert($(this).children('option:selected').val()); 
+      var p1=$(this).children('option:selected').val();//这就是selected的值 
+      //var htmlValue = $("#authority"+p1).html();
+      $.get("{:U('Home/User/getTaskList?tid=')}",function(data,status){
+        
+      });
+      if(p1 == 0){ 
+          $("#task_list").html(''); 
+      }else{
+          $.post("{:U('Home/User/getTaskList')}",
+          {
+            tid:p1
+          },
+          function(data,status){
+            if(status!='success'){
+
+            }
+            else{
+              var Html = "";
+              if(data){
+                  $.each(data, function(idx, obj) {
+                      Html +="<option value='"+obj.id+"'>"+obj.title+"</option>";
+                  });
+              }else{
+                updateAlert('这个人很懒，作业都没有留下',false);
+              }
+              $("#task_list").html(Html);
+            }
+            //alert("Data: " + data + "\nStatus: " + status);
+          });
+      }
+
+      //$("#authority").html(htmlValue);
+      //var p2=$('#param2').val();//获取本页面其他标签的值 
+      //window.location.href="xx.php?param1="+p1+"¶m2="+p2+"";//页面跳转并传参 
+      }) 
+    })
+	</script>
+  <script type="text/javascript">
+    //上传视频
+            /* 初始化上传插件 */
+          $("#upload_file").uploadify({
+                "height"          : 36,
+                "swf"             : "__STATIC__/uploadify/uploadify.swf",
+                "fileObjName"     : "download",
+                "buttonText"      : "上传作业",
+                "uploader"        : "{:U('File/uploadTask',array('session_id'=>session_id()))}",
+                "width"           : 220,
+                'removeTimeout'   : 1,
+                'fileTypeExts'    : '*.DOC; *.TXT; *.RAR; *.ZIP; ',
+                "onUploadSuccess" : upload,
+                'onFallback' : function() {
+                    alert('未检测到兼容版本的Flash.');
+                }
+            });
+          function upload(file, data){
+              var data = $.parseJSON(data);
+              var src = '';
+              
+              //var that = $(this);
+                if(data.status){
+                  updateAlert(data.info,true);
+                  var Html = ' <div class="uploadify-queue-item" style="position: relative;"><span class="fileName">'+data.name+" ( "+data.size+' b )</span><div class="uploadify-progress"><div class="uploadify-progress-bar" style="width: 100%;"><!--Progress Bar--></div></div></div>';
+
+                    $("#upfile_detail").html(Html); 
+                    $("#file_id").val(data.id);
+
+                } else {
+                  updateAlert(data.info,false);
+                }
+            }
+
+            /**
+              data: ""
+              ext: "zip"
+              id: "5"
+              info: "上传成功"
+              key: "download"
+              md5: "b8af0f0983783b678ae1077251aec7cf"
+              name: "PremiumSoft_reg.zip"
+              path: "/Uploads/Task/2015-12-06/566419f55a481.zip"
+              savename: "566419f55a481.zip"
+              savepath: "2015-12-06/"
+              sha1: "3b6cd672d4edbe085f385b6ba427bba942aaab8a"
+              size: 369133
+              status: 1
+              type: "application/zip"
+             */
+  </script>
+</block>

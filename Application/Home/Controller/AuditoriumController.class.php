@@ -29,8 +29,8 @@ class AuditoriumController extends HomeController {
 			$tabVideo[$key] = $this->getTabVideo($value['id']);
 			//转换数据
 			foreach ($tabVideo[$key] as $key1 => $value1) {
-                $tabVideo[$key][$key1]['create_time']=date('Y-m-d',$value1['create_time']);
-                $tabVideo[$key][$key1]['update_time']=date('Y-m-d',$value1['update_time']);
+                $tabVideo[$key][$key1]['create_time'] = date('Y-m-d',$value1['create_time']);
+                $tabVideo[$key][$key1]['update_time'] = date('Y-m-d',$value1['update_time']);
                 
                 //获得教师信息
                 $teach = $this->getInfo($value1['authority']);
@@ -39,7 +39,7 @@ class AuditoriumController extends HomeController {
                 //var_dump( $value1);
 			}
 		}
-		
+		Cookie('__forward__',$_SERVER['REQUEST_URI']);
 		$this->assign('tabVideo',$tabVideo);
      	$this->display();
     }

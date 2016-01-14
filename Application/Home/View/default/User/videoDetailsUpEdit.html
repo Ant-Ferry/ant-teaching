@@ -1,0 +1,241 @@
+<extend name="Base/common" />
+
+<block name="style">
+  <link href="__CSS__/page/user-style.css" rel="stylesheet">
+  <link href="__CSS__/page/teacher-style.css" rel="stylesheet">
+  <link href="__CSS__/module.css" rel="stylesheet">
+  <link href="__CSS__/common.css" rel="stylesheet">
+ 
+</block>
+
+<block name="header">
+</block>
+
+<block name="container">
+  
+  <present name="userinfo">
+    <assign name="personnel" value="$userinfo" />
+    <present name="teach">
+      <assign name="personnel.type" value="1" />
+    </present>
+    <!--载入个人简介 Stater-->
+    <include file="Public/personal-details" />
+    <!--载入个人简介 End-->
+  </present>
+
+    <!--模块二 Stater-->
+    <div class="row">
+      <div class="col-md-2 ">
+        <article  class="indexMain" >
+          <!--载入个人简介导航列表 Stater-->
+          <include file="Public/personal-list-nav" />
+          <!--载入个人简介导航列表 End-->
+        </article>
+      </div>
+      <div class="col-md-10">
+        <article  class="indexMain" >
+          <ul id="myTab" class="nav nav-tabs">
+             <li ><a href="{:U('Home/User/videoDetails')}" data-toggle="tab" data-url-range="external">视频观看记录</a></li>
+             <li class="active"><a href="#update_video" data-toggle="tab" data-url-range="internal">视频上传</a></li>
+          </ul>
+
+          <div id="myTabContent" class="tab-content">
+            <section class="tab-pane fade in active" id="update_video">
+                
+                <ol class="breadcrumb">
+                  <li><a href="javascript:video_return('video_add')">返回</a></li>
+                  <li><a >视频上传</a></li>
+                  <li class="active">添加</li>
+                </ol>
+                <div>
+                  <form id="profile" action="{:U()}" method="POST" class="form-horizontal">
+                    <notempty name="info.id">
+                      <input type="hidden" name="id" value="{$info.id}">
+                    </notempty>
+                    
+                    <input type="hidden" name="type" value="1">
+                    <input type="hidden" name="group" value="{$info.group|default='3'}">
+                    <notempty name="info.authority">
+                      <input type="hidden" name="authority" value="{$info.authority}">
+                    <else/>
+                      <input type="hidden" name="authority" value="{$teachvalue.tid}">
+                    </notempty>
+                    <div class="wlfg-wrap">
+                        <label class="label-name" for="videio_title">视频标题</label>
+                        <div class="rlf-group">
+                            <input type="text" name="title" id="videio_title" autocomplete="off" data-validate="nick" class="rlf-input  rlf-input-exit" value="{$info.title}" placeholder="请输入标题.">
+                            <p class="rlf-tip-wrap"></p>
+                        </div>
+                    </div>
+
+                    <div class="wlfg-wrap">
+                        <label class="label-name" for="videio_tab">分组标签</label>
+                        <div class="rlf-group">
+                             <select name="tab" class="rlf-input " id="videio_tab" >
+                              <notempty name="info.tab">
+                                <foreach name="tabs" item="vo" key="k">
+                                  <option value="{$vo.id}" <eq name="info.tab" value="$vo.id">selected</eq>>{$vo.name}</option> 
+                                </foreach>
+                                <else/>
+                                <foreach name="tabs" item="vo" key="k">
+                                  <option value="{$vo.id}" <eq name="k" value="0">selected</eq>>{$vo.name}</option> 
+                                </foreach>
+                              </notempty>  
+                              
+                            </select>
+                            <p class="rlf-tip-wrap"></p>
+                        </div>
+                    </div>
+                  
+                    <div class="wlfg-wrap">
+                      <label class="label-name" for="upload_picture">封面</label>
+                      <div class="rlf-group">
+                        <input type="file" id="upload_picture">
+                        <input type="hidden" name="img" id="img" value="{$info['img']|default=''}"/>
+                        <div class="upload-img-box">
+                          <notempty name="info['img']">
+                            <div class="upload-pre-item"><img src="{$info.img|get_cover='path'}"/></div>
+                          </notempty>
+                        </div>
+                        <p class="rlf-tip-wrap"></p>
+                      </div>
+                    </div>
+                  
+                    <div class="wlfg-wrap">
+                      <label class="label-name" for="upload_file">视频</label>
+                      <div class="rlf-group">
+                        <input type="file" id="upload_file">
+                        <input type="hidden" name="video" id="video" value="{$info['video']}"/>
+                         <div class="upload-img-box">
+                            <notempty name="info['video']">
+                              <div class="upload-pre-video">
+                                <video width="100%" height="100%" controls="controls">
+                                  <source src="{$info['video']|get_file_field='url'}" type="{$info['video']|get_file_field='mime'}" />
+                                </video>
+                              </div>
+                            </notempty>
+                          </div>
+                        <p class="rlf-tip-wrap"></p>
+                      </div>
+           
+                    </div>
+                  <div class="wlfg-wrap">
+                      <label class="label-name" for="set">视频合集</label>
+                      <div class="rlf-group">
+                          <input type="text" name="set" id="set" autocomplete="off" data-validate="nick" class="rlf-input rlf-input-exit" value="{$info.set|default='set1'}">
+                          <p class="rlf-tip-wrap"></p>
+                      </div>
+                  </div>
+                  <div class="wlfg-wrap">
+                    <label class="label-name" for="sort">排序</label>
+                    <div class="rlf-group">
+                      <input type="text" name="sort" id="sort" autocomplete="off" data-validate="nick" class="rlf-input rlf-input-exit" value="{$info.sort|default='0'}">
+                      <p class="rlf-tip-wrap"></p>
+                    </div>
+                  </div>
+                  <div class="wlfg-wrap">
+                    <div class="rlf-group">
+                      <button type="submit" id="submit" class="rlf-btn-green btn-block profile-btn ajax-post" target-form="form-horizontal">保 存</button>
+                    </div>
+                  </div>
+              </form>  
+                </div>
+                
+            </section>
+          </div>
+        </div>
+      </article>
+    </div>
+    <!--模块二 End-->
+</block>
+<block name="script">
+  <script type="text/javascript" src="__JS__/common.js"></script>
+  <script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	<script type="text/javascript">
+      $('#myTab a').click(function(e) {
+      var range = $(this).attr("data-url-range");
+      if(range == "external"){
+        location.href = $(this).attr("href");
+      }
+      else{
+        $(this).tab('show');
+      }
+    });
+
+    	
+	</script>
+  <script type="text/javascript">
+    //上传图片
+            /* 初始化上传插件 */
+          $("#upload_picture").uploadify({
+                "height"          : 36,
+                "swf"             : "__STATIC__/uploadify/uploadify.swf",
+                "fileObjName"     : "download",
+                "buttonText"      : "上传封面",
+                "uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+                "width"           : 220,
+                'removeTimeout'   : 1,
+                'fileTypeExts'    : '*.jpg; *.png; *.gif;',
+                "onUploadSuccess" : uploadPicture,
+                'onFallback' : function() {
+                    alert('未检测到兼容版本的Flash.');
+                }
+            });
+          function uploadPicture(file, data){
+              var data = $.parseJSON(data);
+              var src = '';
+                if(data.status){
+                  $("#img").val(data.id);
+                  src = data.url || '__ROOT__' + data.path;
+                  $("#img").parent().find('.upload-img-box').html(
+                    '<div class="upload-pre-item"><img src="' + src + '"/></div>'
+                  );
+                } else {
+                  updateAlert(data.info);
+                  setTimeout(function(){
+                        $('#top-alert').find('button').click();
+                        $(that).removeClass('disabled').prop('disabled',false);
+                    },1500);
+                }
+            }
+
+            //上传视频
+            /* 初始化上传插件 */
+          $("#upload_file").uploadify({
+                "height"          : 36,
+                "swf"             : "__STATIC__/uploadify/uploadify.swf",
+                "fileObjName"     : "download",
+                "buttonText"      : "上传视频",
+                "uploader"        : "{:U('File/upload',array('session_id'=>session_id()))}",
+                "width"           : 220,
+                'removeTimeout'   : 1,
+                'fileTypeExts'    : '*.MP4; *.F4V; *.FLV; ',
+                "onUploadSuccess" : upload,
+                'onFallback' : function() {
+                    alert('未检测到兼容版本的Flash.');
+                }
+            });
+          function upload(file, data){
+              var data = $.parseJSON(data);
+              var src = '';
+              //var that = $(this);
+                if(data.status){
+                  //src = data.url || '__ROOT__' + data.path;
+                  var dataObj=eval("("+data.data+")");
+                  src = dataObj.path;
+                  //alert(src);
+                  type = dataObj.mime;
+                  $("#video").val(dataObj.id);
+                  $("#video").parent().find('.upload-img-box').html(
+                    '<div class="upload-pre-video"><video width="100%" height="100%" controls="controls"><source src="'+src+'" type="'+type+'" />您的浏览器不支持Video标签。</video></div>'
+                  );
+                } else {
+                  updateAlert(data.info);
+                  setTimeout(function(){
+                        $('#top-alert').find('button').click();
+                        $(that).removeClass('disabled').prop('disabled',false);
+                    },1500);
+                }
+            }
+  </script>
+</block>

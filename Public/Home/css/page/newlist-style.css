@@ -12,8 +12,7 @@
   /* li {list-style: none;}*/
   .indexList li { padding: 10px 0;border-top: 1px #dadada solid;}
   .indexSub {border-top: 1px #dadada solid;margin-bottom: 20px;}
-  .indexSub .indexTitle {margin-top: 15px; margin-bottom: 15px; padding-bottom: 5px; background-position: 10px center; border-bottom: 1px #000 dashed; }
-
+  
   .tc {text-align: center;}
   a.more { display: inline-block; margin: 10px auto; width: 160px; height: 30px; line-height: 30px; background: #266da3; color: #fff;text-align: center;font-size: 16px;}
 
@@ -61,10 +60,7 @@
   .media-left, .media>.pull-left {
     padding-right: 10px;
   }
-  .media, .media-body {
-    zoom: 1;
-    font-size:14px;
-  }
+  
 
 /*轮播标题*/
 .carousel-caption {
@@ -78,9 +74,10 @@ background: rgba(0,0,0,.6);
 
 /*徽章修改*/
 .badge { font-size: 14px; line-height: 14px; }
+.panel-footer {
+    padding: 10px 0px;
+    background-color: #FFFFFF;
+    border-top: 1px solid #3498DB;
+    text-align: center;
+}
 
-ul { list-style: square inside url('../../images/page/public/dian1.gif')}
-.indexMedia {list-style: square inside url('../../images/page/news/icon_pop.png') }
-.indexMedia li {font-size: 14px; padding: 5px; margin-bottom: 5px; border-bottom: 1px #e2e2e2 dashed; max-height: 54px; overflow:hidden;}
-.indexMedia .active{ background-color: #F7F7F7; color: #3498DB;}
-.indexMedia .active a{ color:#3498DB; width:100%;}

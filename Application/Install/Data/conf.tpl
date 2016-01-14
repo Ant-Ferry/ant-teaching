@@ -19,7 +19,8 @@ return array(
     //'MODULE_ALLOW_LIST'  => array('Home','Admin'),
 
     /* 系统数据加密设置 */
-    'DATA_AUTH_KEY' => '[AUTH_KEY]', //默认数据加密KEY
+    /*'DATA_AUTH_KEY' => '[AUTH_KEY]',//默认数据加密KEY */ 
+    'DATA_AUTH_KEY' => '_08ay$s@E|nDK{o6QYLf~21qGJvCw<5PI9k.p4iU', //默认数据加密KEY
 
     /* 用户相关设置 */
     'USER_MAX_CACHE'     => 1000, //最大缓存用户数

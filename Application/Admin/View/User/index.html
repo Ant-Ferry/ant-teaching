@@ -28,6 +28,7 @@
         <tr>
 		<th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
 		<th class="">UID</th>
+		<th class="">用户名</th>
 		<th class="">昵称</th>
 		<th class="">积分</th>
 		<th class="">登录次数</th>
@@ -43,6 +44,7 @@
 		<tr>
             <td><input class="ids" type="checkbox" name="id[]" value="{$vo.uid}" /></td>
 			<td>{$vo.uid} </td>
+			<td>{$vo.uid|get_username}</td>
 			<td>{$vo.nickname}</td>
 			<td>{$vo.score}</td>
 			<td>{$vo.login}</td>
@@ -54,7 +56,16 @@
 				<else/>
 				<a href="{:U('User/changeStatus?method=resumeUser&id='.$vo['uid'])}" class="ajax-get">启用</a>
 				</eq>
-				<a href="{:U('AuthManager/group?uid='.$vo['uid'])}" class="authorize">授权</a>
+				<a class="hidden" href="{:U('AuthManager/group?uid='.$vo['uid'])}" class="authorize">授权</a>
+				
+				<gt name="vo.uid|is_administrator" value="0">
+					<else/>
+					<eq name="vo.uid|is_eduistrator" value="-1">
+						<a href="{:U('User/authorize?method=byteach&id='.$vo['uid'])}" class="ajax-get">授权为教师</a>
+						<else/>
+						<a href="{:U('User/authorize?method=nobyteach&id='.$vo['uid'])}" class="ajax-get">取消教师授权</a>
+					</eq>
+				</gt>
                 <a href="{:U('User/changeStatus?method=deleteUser&id='.$vo['uid'])}" class="confirm ajax-get">删除</a>
                 </td>
 		</tr>

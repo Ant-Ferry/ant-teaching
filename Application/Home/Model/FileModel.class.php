@@ -52,12 +52,25 @@ class FileModel extends Model{
 		if($info){ //文件上传成功，记录文件信息
 			foreach ($info as $key => &$value) {
 				/* 已经存在文件记录 */
-				if(isset($value['id']) && is_numeric($value['id'])){
-					$value['path'] = substr($setting['rootPath'], 1).$value['savepath'].$value['savename'];	//在模板里的url路径
-					continue;
-				}
+                if(isset($value['id']) && is_numeric($value['id'])){
+                    if(strtolower($driver)=='qiniu'){
+                        $value['path'] ='http://'.$config['domain'].'/'.str_replace('/', '_',$value['savepath']).$value['savename'];
+                    }
+                    else{
+                        $value['path'] = substr($setting['rootPath'], 1).$value['savepath'].$value['savename']; //在模板里的url路径
+                    }
 
-				$value['path'] = substr($setting['rootPath'], 1).$value['savepath'].$value['savename'];	//在模板里的url路径
+                    continue;
+                }
+
+                //$value['path'] = substr($setting['rootPath'], 1).$value['savepath'].$value['savename']; //在模板里的url路径
+                if(strtolower($driver)=='qiniu'){
+                        $value['path'] ='http://'.$config['domain'].'/'.str_replace('/', '_',$value['savepath']).$value['savename'];
+                    }
+                    else{
+                        $value['path'] = substr($setting['rootPath'], 1).$value['savepath'].$value['savename']; //在模板里的url路径
+                    }
+
 				/* 记录文件信息 */
 				if($this->create($value) && ($id = $this->add())){
 					$value['id'] = $id;

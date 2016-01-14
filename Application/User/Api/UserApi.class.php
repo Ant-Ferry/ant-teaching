@@ -10,6 +10,8 @@
 namespace User\Api;
 use User\Api\Api;
 use User\Model\UcenterMemberModel;
+use User\Model\UcenterEduModel;
+
 
 class UserApi extends Api{
     /**
@@ -17,6 +19,8 @@ class UserApi extends Api{
      */
     protected function _init(){
         $this->model = new UcenterMemberModel();
+        //$this->admin_model = new UcenterAdminModel();
+        $this->edumodel = new UcenterEduModel();
     }
 
     /**

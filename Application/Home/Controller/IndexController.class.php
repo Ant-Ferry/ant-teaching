@@ -37,9 +37,15 @@ class IndexController extends HomeController {
 		$subjectActivity = $this->getSubjectActivity();
 		$this->assign('subjectActivity',$subjectActivity);//获得主题活动
 		
+		/*
 		$aboutUs = $this->getAboutUs();//获得关于我们
 		$this->assign('AboutUs',$aboutUs);
-                 
+        Cookie('__forward__',$_SERVER['REQUEST_URI']);
+        */
+        //获得名师
+        $famousTeach = D('PersonnelData')->where(array('type' =>1, 'famous' =>1, 'status' =>1 ))->order('sort','id')->limit(4)->select();
+		$this->assign('famousTeach',$famousTeach); 
+
         $this->display();
     }
 
